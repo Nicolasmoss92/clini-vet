@@ -22,7 +22,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Coluna direita: Contatos */}
         <div className="flex flex-col items-center text-center">
           <p className="text-sm">CNPJ: 00.000.000/0000-00</p>
           <p className="text-sm">Email: contato@empresa.com</p>
