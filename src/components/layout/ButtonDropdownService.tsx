@@ -21,7 +21,7 @@ export function DropdownService() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">Produtos</Button>
+        <Button variant="default">Produtos</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuGroup>

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
  
 export function ButtonAbout() {
   return (
-    <Button variant="outline">
+    <Button variant="default">
       <Link href="/login">Sobre nós</Link>
     </Button>
   )

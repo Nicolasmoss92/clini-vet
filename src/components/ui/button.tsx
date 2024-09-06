@@ -10,15 +10,15 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+          "bg-white text-black shadow hover:bg-green-500 hover:text-white", // Aqui é onde o hover muda para verde
         destructive:
-          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
+          "bg-destructive text-destructive-foreground shadow-sm hover:bg-red-500",
         outline:
           "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+          "bg-secondary text-secondary-foreground shadow-sm hover:bg-green-500", // Também muda para verde aqui
+        ghost: "hover:bg-green-500 hover:text-accent-foreground", // Alterado para verde no hover
+        link: "text-primary underline-offset-4 hover:underline hover:text-green-500", // Muda para verde no hover
       },
       size: {
         default: "h-9 px-4 py-2",
@@ -33,6 +33,7 @@ const buttonVariants = cva(
     },
   }
 )
+
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
