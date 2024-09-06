@@ -19,7 +19,7 @@ export function DropdownProducts() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">Serviços</Button>
+        <Button variant="default">Serviços</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuGroup>

@@ -5,9 +5,9 @@ import { DropdownProducts } from "./ButtonDropdownProducts";
 
 export default function Header() {
     return (
-        <header className="bg-green-800 h-24 flex items-center justify-between px-4">
+        <header className="bg-white h-20 flex items-center justify-between shadow-md px-6">
             <div className="flex items-center">
-                <div className="relative w-36 h-16">
+                <div className="relative w-40 h-16">
                     <img
                         src="/logo.png"
                         alt="Logo"
@@ -15,13 +15,13 @@ export default function Header() {
                     />
                 </div>
             </div>
-            
-            <div className="flex items-center space-x-4 mr-12">
+
+            <nav className="flex items-center space-x-6 mr-12">
                 <DropdownProducts />
                 <DropdownService />
                 <ButtonAbout />
                 <ButtonContact />
-            </div>
+            </nav>
         </header>
     );
 }
