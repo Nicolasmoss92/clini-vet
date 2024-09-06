@@ -37,10 +37,6 @@ export function DropdownService() {
             <Shapes className="mr-2 h-4 w-4" />
             <span>Brinquedos</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Shapes className="mr-2 h-4 w-4" />
-            <span>Brinquedos</span>
-          </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
