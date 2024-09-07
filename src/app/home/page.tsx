@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/carousel"
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
+import { ButtonLearnAbout } from "@/components/layout/ButtonlearnMore";
 
 export default function Home() {
   return (
@@ -53,7 +54,7 @@ export default function Home() {
           </Carousel>
         </div>
 
-        <div className="w-full max-w-6xl mx-auto flex items-center justify-between py-16 px-8 bg-white rounded-lg mt-16">
+        <div className="w-full max-w-6xl mx-auto flex items-center justify-between py-16 px-8 bg-white rounded-lg mt-10">
 
           {/* Texto à esquerda */}
           <div className="w-1/2 pr-8">
@@ -69,9 +70,7 @@ export default function Home() {
             <p className="text-lg text-gray-700 mb-6">
               Somos especializados em [Áreas de Especialização], com técnica moderna que diminui os riscos e garante conforto e rápida recuperação ao animal. Atendemos animais de pequeno e grande porte.
             </p>
-            <button className="bg-green-600 text-white font-semibold py-2 px-6 rounded hover:bg-green-700">
-              Saiba mais
-            </button>
+            <ButtonLearnAbout/>
           </div>
 
           {/* Imagem à direita */}
