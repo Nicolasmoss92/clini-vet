@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 export function ButtonAsChild() {
   return (
     <Button variant="default">
-      <Link href="/login">Login</Link>
+      <Link href="">Login</Link>
     </Button>
   )
 }
