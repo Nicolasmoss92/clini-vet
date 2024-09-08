@@ -19,39 +19,13 @@ export default function Home() {
       <main className="flex-grow flex flex-col items-center p-0 w-full">
         {/* Carrossel ajustado */}
         <div className="relative w-full h-[300px] md:h-[500px] bg-gray-100 overflow-hidden mb-0">
-          <Carousel>
-            <CarouselContent className="w-full h-full">
-              <CarouselItem className="w-full h-full flex items-center justify-center">
-                <img
-                  src="/petsister.png"
-                  alt="Logo"
-                  className="w-full h-full "
-                />
-              </CarouselItem>
-              <CarouselItem className="w-full h-full flex items-center justify-center"><img
-                src="/logo.png"
-                alt="Logo"
-                className="w-full h-full "
-              /></CarouselItem>
-              <CarouselItem className="w-full h-full">
-                <img
-                  src="/diamedico.png"
-                  alt="Logo"
-                  className="w-full h-full"
-                />
-              </CarouselItem>
-            </CarouselContent>
-
-            {/* Botão anterior centralizado verticalmente à esquerda */}
-            <CarouselPrevious className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10">
-              &lt;
-            </CarouselPrevious>
-
-            {/* Botão próximo centralizado verticalmente à direita */}
-            <CarouselNext className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10">
-              &gt;
-            </CarouselNext>
-          </Carousel>
+          <div className="w-full">
+            <img
+              src="/teste.webp"  // Substitua com a imagem que deseja exibir
+              alt="Logo"
+              className="w-full h-auto"  // h-auto faz com que a altura seja ajustada proporcionalmente
+            />
+          </div>
         </div>
 
         <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between py-16 px-4 md:px-8 bg-white rounded-lg mt-10">
