@@ -10,15 +10,17 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-white text-black shadow hover:bg-green-500 hover:text-white", // Aqui é onde o hover muda para verde
+          "bg-green-500 text-white hover:bg-white hover:text-green-500 shadow", // Padrão verde com letras brancas e hover invertido
         destructive:
-          "bg-destructive text-destructive-foreground shadow-sm hover:bg-red-500",
+          "bg-red-500 text-white shadow-sm hover:bg-red-600", // Exemplo de botão destrutivo
         outline:
-          "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
+          "border border-green-500 bg-transparent text-green-500 hover:bg-green-500 hover:text-white", // Contorno verde com hover invertido
         secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-green-500", // Também muda para verde aqui
-        ghost: "hover:bg-green-500 hover:text-accent-foreground", // Alterado para verde no hover
-        link: "text-primary underline-offset-4 hover:underline hover:text-green-500", // Muda para verde no hover
+          "bg-green-300 text-white shadow-sm hover:bg-white hover:text-green-500", // Secundário com hover invertido
+        ghost: 
+          "bg-transparent text-green-500 hover:bg-green-500 hover:text-white", // Fantasma com hover invertido
+        link: 
+          "text-green-500 underline-offset-4 hover:underline hover:text-green-600", // Link com hover verde mais escuro
       },
       size: {
         default: "h-9 px-4 py-2",
@@ -28,11 +30,11 @@ const buttonVariants = cva(
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: "default", // Padrão será verde com letras brancas
       size: "default",
     },
   }
-)
+);
 
 
 export interface ButtonProps
