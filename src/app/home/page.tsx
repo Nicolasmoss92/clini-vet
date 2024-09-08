@@ -1,10 +1,3 @@
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import { ButtonLearnAbout } from "@/components/layout/ButtonlearnMore";
