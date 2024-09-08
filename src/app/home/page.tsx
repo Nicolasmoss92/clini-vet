@@ -54,33 +54,34 @@ export default function Home() {
           </Carousel>
         </div>
 
-        <div className="w-full max-w-6xl mx-auto flex items-center justify-between py-16 px-8 bg-white rounded-lg mt-10">
+        <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between py-16 px-4 md:px-8 bg-white rounded-lg mt-10">
 
           {/* Texto à esquerda */}
-          <div className="w-1/2 pr-8">
-            <h2 className="text-3xl font-bold text-green-600 mb-6">
+          <div className="w-full md:w-1/2 md:pr-8 mb-8 md:mb-0">
+            <h2 className="text-2xl md:text-3xl font-bold text-green-600 mb-4 md:mb-6">
               Bem-vindo à [Nome da Clínica Veterinária]
             </h2>
-            <p className="text-lg text-gray-700 mb-6">
+            <p className="text-base md:text-lg text-gray-700 mb-4 md:mb-6">
               Em funcionamento desde [Ano de Início], a [Nome da Clínica Veterinária] oferece serviços na área de medicina veterinária com qualidade e competência, atendendo cães e gatos com acompanhamento clínico de todas as idades.
             </p>
-            <p className="text-lg text-gray-700 mb-6">
+            <p className="text-base md:text-lg text-gray-700 mb-4 md:mb-6">
               A equipe médica conta com profissionais experientes e prontos a realizar desde consultas e exames até cirurgias mais complexas, tudo com a coordenação e supervisão de [Nome do Veterinário(a)], responsável pela clínica com mais de [X] anos de experiência na saúde animal.
             </p>
-            <p className="text-lg text-gray-700 mb-6">
+            <p className="text-base md:text-lg text-gray-700 mb-4 md:mb-6">
               Somos especializados em [Áreas de Especialização], com técnica moderna que diminui os riscos e garante conforto e rápida recuperação ao animal. Atendemos animais de pequeno e grande porte.
             </p>
             <ButtonLearnAbout />
           </div>
 
           {/* Imagem à direita */}
-          <div className="w-1/2 flex justify-center">
+          <div className="w-full md:w-1/2 flex justify-center">
             <img
               src="/diamedico.png" // Substitua pelo caminho correto da imagem
               alt="Veterinária com um pet"
-              className="w-96 h-96 object-cover rounded-full border-4 border-green-600"
+              className="w-64 h-64 md:w-96 md:h-96 object-cover rounded-full border-4 border-green-600"
             />
           </div>
+
         </div>
 
         <div className="h-2 bg-green-600 w-full mt-16"></div>
