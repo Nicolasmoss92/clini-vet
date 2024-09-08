@@ -70,7 +70,7 @@ export default function Home() {
             <p className="text-lg text-gray-700 mb-6">
               Somos especializados em [Áreas de Especialização], com técnica moderna que diminui os riscos e garante conforto e rápida recuperação ao animal. Atendemos animais de pequeno e grande porte.
             </p>
-            <ButtonLearnAbout/>
+            <ButtonLearnAbout />
           </div>
 
           {/* Imagem à direita */}
@@ -135,9 +135,9 @@ export default function Home() {
               height="100%"
               frameBorder="0"
               style={{ border: 0 }}
-              allowFullScreen=""
+              allowFullScreen={true} // Corrigido: passando booleano
               aria-hidden="false"
-              tabIndex="0"
+              tabIndex={0} // Corrigido: passando número
             ></iframe>
           </div>
         </div>
