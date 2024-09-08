@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 export function ButtonAbout() {
   return (
     <Button variant="default">
-      <Link href="/login">Sobre nós</Link>
+      <Link href="">Sobre nós</Link>
     </Button>
   )
 }
