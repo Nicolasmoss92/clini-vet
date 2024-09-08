@@ -46,7 +46,7 @@ export default function Header() {
       <nav
         className={`${
           isOpen ? "block" : "hidden"
-        } md:flex md:items-center md:space-x-6 absolute md:relative top-20 left-0 w-full md:w-auto bg-white md:bg-transparent px-6 md:px-0 z-10`}
+        } md:flex md:items-center md:space-x-6 absolute md:static top-20 left-0 w-full md:w-auto bg-white md:bg-transparent px-6 md:px-0 z-10`}
       >
         <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6">
           <DropdownProducts />
