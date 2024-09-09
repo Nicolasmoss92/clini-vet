@@ -1,6 +1,6 @@
+import Footer from "@/components/footer";
 import Header from "@/components/header/index";
-import Footer from "@/components/layout/Footer";
-import SubHeader from "@/components/layout/surgery/Header";
+import SubHeader from "@/components/layout/surgery/SubHeader";
 
 export default function Home() {
     return (
