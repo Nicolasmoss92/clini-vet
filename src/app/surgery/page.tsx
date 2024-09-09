@@ -1,6 +1,6 @@
+import Header from "@/components/header/index";
 import Footer from "@/components/layout/Footer";
-import Header from "@/components/layout/Header";
-import HeaderSurgery from "@/components/layout/surgery/header";
+import SubHeader from "@/components/layout/surgery/Header";
 
 export default function Home() {
     return (
@@ -10,7 +10,7 @@ export default function Home() {
 
             {/* Corpo principal (carrossel e texto) */}
             <main className="flex-grow flex flex-col items-center p-0 w-full">
-                <HeaderSurgery />
+                <SubHeader />
             </main>
 
             {/* Rodapé */}
