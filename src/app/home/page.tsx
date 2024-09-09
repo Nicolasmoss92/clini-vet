@@ -1,6 +1,6 @@
 import Footer from "@/components/layout/Footer";
-import Header from "@/components/layout/Header";
-import { ButtonLearnAbout } from "@/components/layout/ButtonlearnMore";
+import Header from "@/components/header";
+import { ButtonLearnAbout } from "@/components/header/ButtonlearnMore";
 
 export default function Home() {
   return (
