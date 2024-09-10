@@ -14,7 +14,6 @@ export default function Home() {
                 <div className="container mx-auto px-4 py-12">
                     {/* Seção de Introdução */}
                     <section className="mb-12 text-center">
-                        <h1 className="text-3xl font-bold mb-6">Cirurgias Veterinárias</h1>
                         <p className="text-lg">
                             A cirurgia veterinária é uma parte essencial dos cuidados médicos
                             para muitos animais. Na Animal, contamos com uma equipe especializada
