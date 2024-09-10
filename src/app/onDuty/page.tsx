@@ -1,7 +1,7 @@
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { ButtonLearnAbout } from "@/components/header/ButtonlearnMore";
-import SubHeader from "@/components/layout/onDuty/Header";
+import SubHeader from "@/components/layout/onDuty/HeaderOnDuty";
 
 export default function OnDuty() {
     return (
