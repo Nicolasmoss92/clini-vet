@@ -28,7 +28,7 @@ export default function Home() {
                     {/* Imagem à direita */}
                     <div className="w-full md:w-1/2 flex justify-center">
                         <img
-                            src="/diamedico.png" // Substitua pelo caminho correto da imagem
+                            src="/teste.webp" // Substitua pelo caminho correto da imagem
                             alt="Veterinária com um pet"
                             className="w-64 h-64 md:w-96 md:h-96 object-cover rounded-full border-4 border-green-600"
                         />
@@ -40,7 +40,7 @@ export default function Home() {
                     {/* Imagem à esquerda */}
                     <div className="w-full md:w-1/2 flex justify-center">
                         <img
-                            src="/diamedico.png" // Substitua pelo caminho correto da imagem
+                            src="/teste.webp" // Substitua pelo caminho correto da imagem
                             alt="Veterinária com um pet"
                             className="w-64 h-64 md:w-96 md:h-96 object-cover rounded-full border-4 border-green-600"
                         />
