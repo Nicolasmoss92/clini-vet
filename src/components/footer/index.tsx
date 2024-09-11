@@ -4,7 +4,7 @@ import { Facebook, Instagram } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-white h-40 flex flex-col items-center justify-center shadow-md px-6 w-full">
+    <footer className="bg-white h-40 flex flex-col items-center justify-center shadow-4xl px-6 w-full">
       <div className="flex flex-row items-center justify-center space-x-12">
         {/* Coluna esquerda: Logo e ícones das redes sociais */}
         <div className="flex flex-col items-center">
@@ -14,10 +14,10 @@ const Footer = () => {
           {/* Ícones das redes sociais */}
           <div className="flex space-x-3">
             <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-              <Facebook  className="w-6 h-6 text-blue-600" />
+              <Facebook className="w-6 h-6 text-blue-600" />
             </a>
             <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-              <Instagram  className="w-6 h-6 text-blue-400" />
+              <Instagram className="w-6 h-6 text-blue-400" />
             </a>
           </div>
         </div>
