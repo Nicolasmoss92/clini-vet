@@ -2,6 +2,8 @@
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { ButtonLearnAbout } from "@/components/header/ButtonlearnMore";
+import { ButtonLearnAboutHome } from "@/components/home/ButtonlearnMoreHome";
+import { ButtonAsChild } from "@/components/layout/ButtonDefault";
 
 export default function Home() {
   return (
@@ -38,7 +40,7 @@ export default function Home() {
             <p className="text-base md:text-lg text-gray-700 mb-4 md:mb-6">
               Somos especializados em [Áreas de Especialização], com técnica moderna que diminui os riscos e garante conforto e rápida recuperação ao animal. Atendemos animais de pequeno e grande porte.
             </p>
-            <ButtonLearnAbout />
+            <ButtonLearnAboutHome />
           </div>
 
           {/* Imagem à direita */}

@@ -1,10 +1,10 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
  
-export function ButtonContact() {
+export function ButtonLearnAbout() {
   return (
-    <Button  variant="default">
-      <Link href="contact">Contato</Link>
+    <Button variant="default">
+      <Link href="">Saiba mais</Link>
     </Button>
   )
 }
