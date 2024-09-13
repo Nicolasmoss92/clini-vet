@@ -11,7 +11,7 @@ export default function Home() {
             {/* Corpo principal (carrossel e texto) */}
             <main className="flex-grow flex flex-col items-center p-0 w-full">
                 <SubHeader />
-                <div className="container mx-auto px-4 py-12">
+                <div className="container mx-auto px-4 py-8">
                     {/* Seção de Introdução */}
                     <section className="mb-12 text-center">
                         <p className="text-lg">
