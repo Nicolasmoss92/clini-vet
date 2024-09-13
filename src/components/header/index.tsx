@@ -19,13 +19,15 @@ export default function Header() {
     <header className="bg-white h-20 flex items-center justify-between shadow-md px-6">
       {/* Logo */}
       <div className="flex items-center">
-        <div className="relative w-40 h-16">
-          <img
-            src="/logo.png"
-            alt="Logo"
-            className="object-contain w-full h-full"
-          />
-        </div>
+          <div className="relative w-40 h-16">
+            <a href="/home">
+              <img
+                src="/logo.png"
+                alt="Logo"
+                className="object-contain w-full h-full"
+              />
+            </a>
+          </div>
       </div>
 
       {/* Botão do menu para mobile */}
