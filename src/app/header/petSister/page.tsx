@@ -1,6 +1,6 @@
 import Footer from "@/components/footer";
 import Header from "@/components/header";
-import { ButtonLearnAbout } from "@/components/header/ButtonlearnMore";
+import { ButtonLearnAbout } from "@/components/layout/petSister/ButtonLearnMorePetSister";
 import SubHeader from "@/components/layout/petSister/HeaderPetSister";
 
 export default function PetSister() {
@@ -13,7 +13,7 @@ export default function PetSister() {
                     {/* Texto à esquerda */}
                     <div className="w-full md:w-1/2 md:pr-8 mb-8 md:mb-0">
                         <h2 className="text-2xl md:text-3xl font-bold text-green-600 mb-4 md:mb-6">
-                            Serviço Pet Sister na [Nome da Clínica Veterinária]
+                            Serviço Pet Sister na CliniVet
                         </h2>
                         <p className="text-base md:text-lg text-gray-700 mb-4 md:mb-6">
                             Nosso serviço de Pet Sister é ideal para cuidar do seu animalzinho no conforto da sua própria casa, enquanto você viaja ou precisa se ausentar. Sabemos o quanto é importante garantir que o seu pet esteja sendo bem cuidado em sua ausência.
@@ -24,6 +24,7 @@ export default function PetSister() {
                         <p className="text-base md:text-lg text-gray-700 mb-4 md:mb-6">
                             Nossa equipe é composta por profissionais capacitados, que garantem o bem-estar e a segurança do seu animal. Também mantemos contato constante para que você se sinta tranquilo, sabendo que o seu pet está em boas mãos.
                         </p>
+                        <ButtonLearnAbout />
                     </div>
 
                     {/* Imagem à direita */}
