@@ -1,7 +1,7 @@
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { ButtonLearnAbout } from "@/components/layout/reabilit/ButtonLearnMorereabilit";
-import SubHeader from "@/components/layout/petSister/HeaderPetSister";
+import SubHeader from "@/components/layout/reabilit/HeaderReabilit";
 
 export default function AnimalTherapy() {
     return (
