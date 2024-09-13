@@ -62,37 +62,46 @@ export default function Home() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Card 1: Cirurgias */}
-            <div className="bg-white p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-semibold text-green-600 mb-4">Cirurgias</h3>
-              <p className="text-gray-700">
-                Realizamos cirurgias de alta complexidade com equipe especializada, garantindo o bem-estar do seu animal.
-              </p>
-            </div>
+            <a href="/header/surgery">
+              <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 min-h-[250px]">
+                <h3 className="text-xl font-semibold text-green-600 mb-4">Cirurgias</h3>
+                <p className="text-gray-700">
+                  Realizamos cirurgias de alta complexidade com equipe especializada, garantindo o bem-estar do seu animal.
+                </p>
+              </div>
+            </a>
 
             {/* Card 2: Plantões */}
-            <div className="bg-white p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-semibold text-green-600 mb-4">Plantões</h3>
-              <p className="text-gray-700">
-                Atendimento 24 horas com profissionais de prontidão para emergências e cuidados.
-              </p>
-            </div>
+            <a href="header/onDuty">
+              <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 min-h-[250px]">
+                <h3 className="text-xl font-semibold text-green-600 mb-4">Plantões</h3>
+                <p className="text-gray-700">
+                  Atendimento 24 horas com profissionais de prontidão para emergências e cuidados.
+                </p>
+              </div>
+            </a>
 
             {/* Card 3: Amo Pet Sister */}
-            <div className="bg-white p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-semibold text-green-600 mb-4">Amo Pet Sister</h3>
-              <p className="text-gray-700">
-                Serviço de cuidados personalizados para pets em recuperação ou com necessidades especiais.
-              </p>
-            </div>
+            <a href="header/petSister">
+              <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 min-h-[250px]">
+                <h3 className="text-xl font-semibold text-green-600 mb-4">Amo Pet Sister</h3>
+                <p className="text-gray-700">
+                  Serviço de cuidados personalizados para pets em recuperação ou com necessidades especiais.
+                </p>
+              </div>
+            </a>
 
             {/* Card 4: Reabilitação e Terapia */}
-            <div className="bg-white p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-semibold text-green-600 mb-4">Reabilitação e Terapia</h3>
-              <p className="text-gray-700">
-                Terapias avançadas para recuperação e bem-estar do seu pet, incluindo fisioterapia e acupuntura.
-              </p>
-            </div>
+            <a href="header/reabilit">
+              <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 min-h-[250px]">
+                <h3 className="text-xl font-semibold text-green-600 mb-4">Reabilitação e Terapia</h3>
+                <p className="text-gray-700">
+                  Terapias avançadas para recuperação e bem-estar do seu pet, incluindo fisioterapia e acupuntura.
+                </p>
+              </div>
+            </a>
           </div>
+
         </div>
 
         <div className="py-16 px-8">
