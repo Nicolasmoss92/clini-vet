@@ -6,6 +6,7 @@ import { DropdownService } from "./ButtonDropdownService";
 import { DropdownProducts } from "./ButtonDropdownProducts";
 import { useState } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { ButtonHome } from "./ButtonHome";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,6 +50,7 @@ export default function Header() {
         } md:flex md:items-center md:space-x-6 absolute md:static top-20 left-0 w-full md:w-auto bg-white md:bg-transparent px-6 md:px-0 z-10`}
       >
         <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6">
+          <ButtonHome />
           <DropdownProducts />
           <DropdownService />
           <ButtonAbout />
