@@ -26,7 +26,7 @@ export default function Home() {
                     {/* Cards de Tipos de Cirurgias */}
                     <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {/* Card 1 */}
-                        <div className="bg-white border rounded-lg shadow-lg p-6">
+                        <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 min-h-[250px]">
                             <h2 className="text-xl font-bold mb-4">Cirurgia Ortopédica</h2>
                             <p className="text-sm text-gray-600 mb-4">
                                 Focada em fraturas e problemas nos ossos e articulações dos animais,
@@ -34,7 +34,7 @@ export default function Home() {
                                 degenerativas.
                             </p>
                             <a
-                                href="#"
+                                href="/contact"
                                 className="bg-green-500 text-white hover:bg-white hover:text-green-500 border border-green-500 py-2 px-4 rounded shadow transition"
                             >
                                 Saiba mais
@@ -42,7 +42,7 @@ export default function Home() {
                         </div>
 
                         {/* Card 2 */}
-                        <div className="bg-white border rounded-lg shadow-lg p-6">
+                        <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 min-h-[250px]">
                             <h2 className="text-xl font-bold mb-4">Cirurgia Oftalmológica</h2>
                             <p className="text-sm text-gray-600 mb-4">
                                 Tratamento cirúrgico para doenças oculares como catarata, úlceras de
@@ -50,7 +50,7 @@ export default function Home() {
                                 dos pets.
                             </p>
                             <a
-                                href="#"
+                                href="/contact"
                                 className="bg-green-500 text-white hover:bg-white hover:text-green-500 border border-green-500 py-2 px-4 rounded shadow transition"
                             >
                                 Saiba mais
@@ -58,14 +58,14 @@ export default function Home() {
                         </div>
 
                         {/* Card 3 */}
-                        <div className="bg-white border rounded-lg shadow-lg p-6">
+                        <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 min-h-[250px]">
                             <h2 className="text-xl font-bold mb-4">Cirurgia de Tecidos Moles</h2>
                             <p className="text-sm text-gray-600 mb-4">
                                 Inclui procedimentos em órgãos internos, como remoção de tumores,
                                 cirurgia gastrointestinal, biópsias e outros.
                             </p>
                             <a
-                                href="#"
+                                href="/contact"
                                 className="bg-green-500 text-white hover:bg-white hover:text-green-500 border border-green-500 py-2 px-4 rounded shadow transition"
                             >
                                 Saiba mais
@@ -73,14 +73,14 @@ export default function Home() {
                         </div>
 
                         {/* Card 4 */}
-                        <div className="bg-white border rounded-lg shadow-lg p-6">
+                        <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 min-h-[250px]">
                             <h2 className="text-xl font-bold mb-4">Cirurgia Neurológica</h2>
                             <p className="text-sm text-gray-600 mb-4">
                                 Para casos que envolvem problemas no sistema nervoso, como hérnias
                                 de disco, epilepsia e outras condições.
                             </p>
                             <a
-                                href="#"
+                                href="/contact"
                                 className="bg-green-500 text-white hover:bg-white hover:text-green-500 border border-green-500 py-2 px-4 rounded shadow transition"
                             >
                                 Saiba mais
@@ -88,14 +88,14 @@ export default function Home() {
                         </div>
 
                         {/* Card 5 */}
-                        <div className="bg-white border rounded-lg shadow-lg p-6">
+                        <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 min-h-[250px]">
                             <h2 className="text-xl font-bold mb-4">Cirurgia Dental</h2>
                             <p className="text-sm text-gray-600 mb-4">
                                 Focada na remoção de dentes comprometidos, tratamento de fraturas e
                                 infecções orais para manter a saúde bucal dos animais.
                             </p>
                             <a
-                                href="#"
+                                href="/contact"
                                 className="bg-green-500 text-white hover:bg-white hover:text-green-500 border border-green-500 py-2 px-4 rounded shadow transition"
                             >
                                 Saiba mais
@@ -103,14 +103,14 @@ export default function Home() {
                         </div>
 
                         {/* Card 6 */}
-                        <div className="bg-white border rounded-lg shadow-lg p-6">
+                        <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 min-h-[250px]">
                             <h2 className="text-xl font-bold mb-4">Cirurgia de Emergência</h2>
                             <p className="text-sm text-gray-600 mb-4">
                                 Procedimentos rápidos e eficazes para tratar condições críticas que
                                 exigem intervenção imediata, como traumas e acidentes.
                             </p>
                             <a
-                                href="#"
+                                href="/contact"
                                 className="bg-green-500 text-white hover:bg-white hover:text-green-500 border border-green-500 py-2 px-4 rounded shadow transition"
                             >
                                 Saiba mais
