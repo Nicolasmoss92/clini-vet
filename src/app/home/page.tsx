@@ -29,7 +29,7 @@ export default function Home() {
           {/* Texto à esquerda */}
           <div className="w-full md:w-1/2 md:pr-8 mb-8 md:mb-0">
             <h2 className="text-2xl md:text-3xl font-bold text-green-600 mb-4 md:mb-6">
-              Bem-vindo à [Nome da Clínica Veterinária]
+              Bem-vindo à CliniVet
             </h2>
             <p className="text-base md:text-lg text-gray-700 mb-4 md:mb-6">
               Em funcionamento desde [Ano de Início], a [Nome da Clínica Veterinária] oferece serviços na área de medicina veterinária com qualidade e competência, atendendo cães e gatos com acompanhamento clínico de todas as idades.
