@@ -5,14 +5,13 @@ import SubHeader from "@/components/layout/surgery/SubHeader";
 export default function Home() {
     return (
         <div className="flex flex-col min-h-screen overflow-hidden">
-            {/* Cabeçalho */}
+
             <Header />
 
-            {/* Corpo principal (carrossel e texto) */}
             <main className="flex-grow flex flex-col items-center p-0 w-full">
                 <SubHeader />
                 <div className="container mx-auto px-4 py-8">
-                    {/* Seção de Introdução */}
+                 
                     <section className="mb-12 text-center">
                         <p className="text-lg">
                             A cirurgia veterinária é uma parte essencial dos cuidados médicos
@@ -23,9 +22,9 @@ export default function Home() {
                         </p>
                     </section>
 
-                    {/* Cards de Tipos de Cirurgias */}
+                   
                     <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {/* Card 1 */}
+                
                         <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 min-h-[250px]">
                             <h2 className="text-xl font-bold mb-4">Cirurgia Ortopédica</h2>
                             <p className="text-sm text-gray-600 mb-4">
@@ -41,7 +40,7 @@ export default function Home() {
                             </a>
                         </div>
 
-                        {/* Card 2 */}
+              
                         <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 min-h-[250px]">
                             <h2 className="text-xl font-bold mb-4">Cirurgia Oftalmológica</h2>
                             <p className="text-sm text-gray-600 mb-4">
@@ -57,7 +56,7 @@ export default function Home() {
                             </a>
                         </div>
 
-                        {/* Card 3 */}
+                   
                         <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 min-h-[250px]">
                             <h2 className="text-xl font-bold mb-4">Cirurgia de Tecidos Moles</h2>
                             <p className="text-sm text-gray-600 mb-4">
@@ -72,7 +71,6 @@ export default function Home() {
                             </a>
                         </div>
 
-                        {/* Card 4 */}
                         <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 min-h-[250px]">
                             <h2 className="text-xl font-bold mb-4">Cirurgia Neurológica</h2>
                             <p className="text-sm text-gray-600 mb-4">
@@ -87,7 +85,7 @@ export default function Home() {
                             </a>
                         </div>
 
-                        {/* Card 5 */}
+                   
                         <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 min-h-[250px]">
                             <h2 className="text-xl font-bold mb-4">Cirurgia Dental</h2>
                             <p className="text-sm text-gray-600 mb-4">
@@ -102,7 +100,7 @@ export default function Home() {
                             </a>
                         </div>
 
-                        {/* Card 6 */}
+                
                         <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 min-h-[250px]">
                             <h2 className="text-xl font-bold mb-4">Cirurgia de Emergência</h2>
                             <p className="text-sm text-gray-600 mb-4">
@@ -120,7 +118,6 @@ export default function Home() {
                 </div>
             </main>
 
-            {/* Rodapé */}
             <Footer />
         </div>
     );

@@ -4,14 +4,12 @@ import Header from "@/components/header";
 export default function Home() {
     return (
         <div className="flex flex-col min-h-screen overflow-hidden">
-            {/* Cabeçalho */}
             <Header />
 
-            {/* Corpo principal */}
             <main className="flex-grow flex flex-col items-center p-0 w-full">
-                {/* Primeira parte: Texto à esquerda e imagem à direita */}
+               
                 <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between py-2 px-4 md:px-8 bg-white rounded-lg mt-10">
-                    {/* Texto à esquerda */}
+                    
                     <div className="w-full md:w-1/2 md:pr-8 mb-8 md:mb-0">
                         <h2 className="text-2xl md:text-3xl font-bold text-green-600 mb-4 md:mb-6">
                             Um breve resumo sobre a CliniVet...
@@ -24,7 +22,6 @@ export default function Home() {
                         </p>
                     </div>
 
-                    {/* Imagem à direita */}
                     <div className="w-full md:w-1/2 flex justify-center">
                         <img
                             src="/teste.webp" // Substitua pelo caminho correto da imagem
@@ -34,18 +31,17 @@ export default function Home() {
                     </div>
                 </div>
 
-                {/* Segunda parte: Imagem à esquerda e texto à direita */}
+                
                 <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between py-16 px-4 md:px-8 bg-white rounded-lg -mt-16">
-                    {/* Imagem à esquerda */}
+                    
                     <div className="w-full md:w-1/2 flex justify-center">
                         <img
-                            src="/teste.webp" // Substitua pelo caminho correto da imagem
+                            src="/teste.webp" 
                             alt="Veterinária com um pet"
                             className="w-64 h-64 md:w-96 md:h-96 object-cover rounded-full border-4 border-green-600"
                         />
                     </div>
 
-                    {/* Texto à direita */}
                     <div className="w-full md:w-1/2">
                         <p className="text-base md:text-lg text-gray-700 mb-4 md:mb-6">
                             Em nossa clínica, acreditamos que cada animal merece cuidados personalizados e carinho. Com especialização em áreas como cardiologia, dermatologia e ortopedia, nossa equipe está pronta para oferecer o melhor tratamento possível. Além disso, oferecemos serviços de vacinação, controle de parasitas, e orientações sobre nutrição e bem-estar para garantir uma vida longa e saudável para seu pet.
@@ -70,15 +66,14 @@ export default function Home() {
                             height="100%"
                             frameBorder="0"
                             style={{ border: 0 }}
-                            allowFullScreen={true} // Corrigido: passando booleano
+                            allowFullScreen={true} 
                             aria-hidden="false"
-                            tabIndex={0} // Corrigido: passando número
+                            tabIndex={0} 
                         ></iframe>
                     </div>
                 </div>
             </main>
 
-            {/* Rodapé */}
             <Footer />
         </div>
     );

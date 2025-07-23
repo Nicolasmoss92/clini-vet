@@ -11,14 +11,14 @@ import { ButtonHome } from "./ButtonHome";
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Função para alternar o estado do menu
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   return (
     <header className="bg-white h-20 flex items-center justify-between shadow-md px-6">
-      {/* Logo */}
+      
       <div className="flex items-center">
           <div className="relative w-40 h-16">
             <img
@@ -29,7 +29,6 @@ export default function Header() {
           </div>
       </div>
 
-      {/* Botão do menu para mobile */}
       <div className="md:hidden">
         <button
           onClick={toggleMenu}
@@ -43,7 +42,6 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Navegação principal */}
       <nav
         className={`${
           isOpen ? "block" : "hidden"

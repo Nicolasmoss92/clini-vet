@@ -9,12 +9,12 @@ import { ButtonAsChild } from "@/components/layout/ButtonDefault";
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">
-      {/* Cabeçalho */}
+   
       <Header />
 
-      {/* Corpo principal (carrossel e texto) */}
+   
       <main className="flex-grow flex flex-col items-center p-0 w-full">
-        {/* Carrossel ajustado */}
+   
         <div className="relative w-full h-[300px] md:h-[500px] bg-gray-100 overflow-hidden mb-0">
           <div className="w-full">
             <img
@@ -27,7 +27,7 @@ export default function Home() {
 
         <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between py-16 px-4 md:px-8 bg-white rounded-lg mt-10">
 
-          {/* Texto à esquerda */}
+         
           <div className="w-full md:w-1/2 md:pr-8 mb-8 md:mb-0">
             <h2 className="text-2xl md:text-3xl font-bold text-green-600 mb-4 md:mb-6">
               Bem-vindo à CliniVet
@@ -44,7 +44,7 @@ export default function Home() {
             <ButtonLearnAboutHome />
           </div>
 
-          {/* Imagem à direita */}
+    
           <div className="w-full md:w-1/2 flex justify-center">
             <img
               src="/teste.webp" // Substitua pelo caminho correto da imagem
@@ -62,7 +62,7 @@ export default function Home() {
             Conheça Nossas Soluções
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Card 1: Cirurgias */}
+          
             <a href="/header/surgery">
               <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 min-h-[250px]">
                 <h3 className="text-xl font-semibold text-green-600 mb-4">Cirurgias</h3>
@@ -72,7 +72,7 @@ export default function Home() {
               </div>
             </a>
 
-            {/* Card 2: Plantões */}
+       
             <a href="header/onDuty">
               <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 min-h-[250px]">
                 <h3 className="text-xl font-semibold text-green-600 mb-4">Plantões</h3>
@@ -82,7 +82,7 @@ export default function Home() {
               </div>
             </a>
 
-            {/* Card 3: Amo Pet Sister */}
+        
             <a href="header/petSister">
               <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 min-h-[250px]">
                 <h3 className="text-xl font-semibold text-green-600 mb-4">Amo Pet Sister</h3>
@@ -92,7 +92,7 @@ export default function Home() {
               </div>
             </a>
 
-            {/* Card 4: Reabilitação e Terapia */}
+        
             <a href="header/reabilit">
               <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 min-h-[250px]">
                 <h3 className="text-xl font-semibold text-green-600 mb-4">Reabilitação e Terapia</h3>
@@ -116,15 +116,14 @@ export default function Home() {
               height="100%"
               frameBorder="0"
               style={{ border: 0 }}
-              allowFullScreen={true} // Corrigido: passando booleano
+              allowFullScreen={true} 
               aria-hidden="false"
-              tabIndex={0} // Corrigido: passando número
+              tabIndex={0}
             ></iframe>
           </div>
         </div>
       </main>
 
-      {/* Rodapé */}
       <Footer />
     </div>
   );
