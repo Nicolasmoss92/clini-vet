@@ -11,7 +11,7 @@ export default function OnDuty() {
                 <SubHeader />
 
                 <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between py-2 px-4 md:px-8 bg-white rounded-lg mt-10">
-                    {/* Texto à esquerda */}
+                  
                     <div className="w-full md:w-1/2 md:pr-8 mb-8 md:mb-0">
                         <h2 className="text-2xl md:text-3xl font-bold text-green-600 mb-4 md:mb-6">
                             Serviço de Plantões na CliniVet
@@ -28,7 +28,7 @@ export default function OnDuty() {
                         <ButtonLearnAbout />
                     </div>
 
-                    {/* Imagem à direita */}
+
                     <div className="w-full md:w-1/2 flex justify-center">
                         <img
                             src="/teste.webp" // Substitua pelo caminho correto da imagem
