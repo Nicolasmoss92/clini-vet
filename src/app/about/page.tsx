@@ -1,6 +1,5 @@
 import Footer from "@/components/footer";
 import Header from "@/components/header";
-import { ButtonLearnAbout } from "@/components/header/ButtonlearnMore";
 
 export default function Home() {
     return (

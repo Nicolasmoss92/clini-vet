@@ -105,7 +105,7 @@ export default function Home() {
                             <h2 className="text-xl font-bold mb-4">Cirurgia de Emergência</h2>
                             <p className="text-sm text-gray-600 mb-4">
                                 Procedimentos rápidos e eficazes para tratar condições críticas que
-                                exigem intervenção imediata, como traumas e acidentes.
+                                exig intervenção imediata, como traumas e acidentes.
                             </p>
                             <a
                                 href="/contact"
