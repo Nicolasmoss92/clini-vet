@@ -89,9 +89,9 @@ export function CalendarPicker(props: CalendarPickerProps) {
     <div className="bg-white rounded-xl border border-gray-100 shadow-md p-4 select-none">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <button onClick={prevMonth} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 transition text-lg leading-none">‹</button>
+        <button type="button" onClick={prevMonth} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 transition text-lg leading-none">‹</button>
         <span className="text-sm font-semibold text-gray-700">{MONTHS[viewDate.month]} {viewDate.year}</span>
-        <button onClick={nextMonth} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 transition text-lg leading-none">›</button>
+        <button type="button" onClick={nextMonth} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 transition text-lg leading-none">›</button>
       </div>
 
       {/* Cabeçalho dias */}
@@ -114,6 +114,7 @@ export function CalendarPicker(props: CalendarPickerProps) {
           return (
             <button
               key={iso}
+              type="button"
               disabled={disabled}
               onClick={() => handleClick(iso)}
               className={[

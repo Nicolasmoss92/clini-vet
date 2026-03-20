@@ -47,6 +47,8 @@ export const animaisApi = {
   get: (id: string) => request<Animal>(`/animais/${id}`),
   create: (data: CreateAnimalData) =>
     request<Animal>('/animais', { method: 'POST', body: JSON.stringify(data) }),
+  updateFoto: (id: string, foto: string) =>
+    request<Animal>(`/animais/${id}/foto`, { method: 'PATCH', body: JSON.stringify({ foto }) }),
   delete: (id: string) => request<Animal>(`/animais/${id}`, { method: 'DELETE' }),
 };
 
@@ -135,6 +137,7 @@ export interface CreateAgendamentoData {
   horaInicio: string;
   horaFim?: string;
   observacoes?: string;
+  status?: StatusAgendamento;
 }
 
 export interface CreateVacinaData {

@@ -31,6 +31,7 @@ export function TimeSlotPicker({ selectedTime, onSelectTime, occupiedTimes }: Ti
           return (
             <button
               key={slot}
+              type="button"
               disabled={occupied}
               onClick={() => onSelectTime(slot)}
               className={`

@@ -1,13 +1,15 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { animaisApi, vacinasApi, Animal, Vacina } from '@/lib/api';
 
 export default function MinhAreaPage() {
   const [animais, setAnimais] = useState<Animal[]>([]);
   const [vacinas, setVacinas] = useState<Record<string, Vacina[]>>({});
   const [expanded, setExpanded] = useState<string | null>(null);
+  const [uploading, setUploading] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const fileInputRefs = useRef<Record<string, HTMLInputElement | null>>({});
 
   useEffect(() => {
     animaisApi.list().then(setAnimais).finally(() => setLoading(false));
@@ -20,6 +22,21 @@ export default function MinhAreaPage() {
       const v = await vacinasApi.listByAnimal(id);
       setVacinas((prev) => ({ ...prev, [id]: v }));
     }
+  };
+
+  const handleFotoChange = async (animal: Animal, file: File) => {
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const base64 = reader.result as string;
+      setUploading(animal.id);
+      try {
+        const updated = await animaisApi.updateFoto(animal.id, base64);
+        setAnimais((prev) => prev.map((a) => (a.id === animal.id ? { ...a, foto: updated.foto } : a)));
+      } finally {
+        setUploading(null);
+      }
+    };
+    reader.readAsDataURL(file);
   };
 
   if (loading) {
@@ -46,9 +63,33 @@ export default function MinhAreaPage() {
                 onClick={() => toggleAnimal(animal.id)}
                 className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-gray-50 transition"
               >
-                <div>
-                  <p className="font-semibold text-gray-700">{animal.nome}</p>
-                  <p className="text-sm text-gray-500">{animal.especie}{animal.raca ? ` · ${animal.raca}` : ''}</p>
+                <div className="flex items-center gap-4">
+                  {/* Foto do pet */}
+                  <div
+                    className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-green-200 bg-green-50 flex items-center justify-center flex-shrink-0 cursor-pointer"
+                    onClick={(e) => { e.stopPropagation(); fileInputRefs.current[animal.id]?.click(); }}
+                    title="Clique para alterar a foto"
+                  >
+                    {uploading === animal.id ? (
+                      <div className="w-5 h-5 border-2 border-green-600 border-t-transparent rounded-full animate-spin" />
+                    ) : animal.foto ? (
+                      <img src={animal.foto} alt={animal.nome} className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-green-400 text-xl">🐾</span>
+                    )}
+                    <input
+                      ref={(el) => { fileInputRefs.current[animal.id] = el; }}
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => { if (e.target.files?.[0]) handleFotoChange(animal, e.target.files[0]); }}
+                    />
+                  </div>
+
+                  <div>
+                    <p className="font-semibold text-gray-700">{animal.nome}</p>
+                    <p className="text-sm text-gray-500">{animal.especie}{animal.raca ? ` · ${animal.raca}` : ''}</p>
+                  </div>
                 </div>
                 <span className="text-green-600 text-lg">{expanded === animal.id ? '▲' : '▼'}</span>
               </button>
