@@ -2,8 +2,8 @@
 
 import { ButtonAbout } from "./ButtonAbout";
 import { ButtonContact } from "./ButtonContact";
-import { DropdownService } from "./ButtonDropdownService";
 import { DropdownProducts } from "./ButtonDropdownProducts";
+import { ButtonLogin } from "./ButtonLogin";
 import { useState } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { ButtonHome } from "./ButtonHome";
@@ -20,7 +20,7 @@ export default function Header() {
     <header className="bg-white h-20 flex items-center justify-between shadow-md px-6">
       
       <div className="flex items-center">
-          <div className="relative w-40 h-16">
+          <div className="relative w-52 h-20">
             <img
               src="/logo.png"
               alt="Logo"
@@ -50,9 +50,9 @@ export default function Header() {
         <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6">
           <ButtonHome />
           <DropdownProducts />
-          <DropdownService />
           <ButtonAbout />
           <ButtonContact />
+          <ButtonLogin />
         </div>
       </nav>
     </header>

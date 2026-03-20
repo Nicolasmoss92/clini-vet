@@ -10,17 +10,17 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-green-500 text-white hover:bg-white hover:text-green-500 shadow", // Padrão verde com letras brancas e hover invertido
+          "bg-green-600 text-white hover:bg-white hover:text-green-600 shadow", // Padrão verde com letras brancas e hover invertido
         destructive:
           "bg-red-500 text-white shadow-sm hover:bg-red-600", // Exemplo de botão destrutivo
         outline:
-          "border border-green-500 bg-transparent text-green-500 hover:bg-green-500 hover:text-white", // Contorno verde com hover invertido
+          "border border-green-600 bg-transparent text-green-600 hover:bg-green-600 hover:text-white", // Contorno verde com hover invertido
         secondary:
-          "bg-green-300 text-white shadow-sm hover:bg-white hover:text-green-500", // Secundário com hover invertido
+          "bg-green-300 text-white shadow-sm hover:bg-white hover:text-green-600", // Secundário com hover invertido
         ghost: 
-          "bg-transparent text-green-500 hover:bg-green-500 hover:text-white", // Fantasma com hover invertido
+          "bg-transparent text-green-600 hover:bg-green-600 hover:text-white", // Fantasma com hover invertido
         link: 
-          "text-green-500 underline-offset-4 hover:underline hover:text-green-600", // Link com hover verde mais escuro
+          "text-green-600 underline-offset-4 hover:underline hover:text-green-600", // Link com hover verde mais escuro
       },
       size: {
         default: "h-9 px-4 py-2",

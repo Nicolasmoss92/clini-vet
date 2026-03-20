@@ -1,6 +1,5 @@
 import Footer from "@/components/footer";
 import Header from "@/components/header";
-import { ButtonLearnAbout } from "@/components/header/ButtonlearnMore";
 
 export default function Home() {
     return (
@@ -56,20 +55,19 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className="py-16 px-8">
+                <div className="w-full max-w-6xl mx-auto py-16 px-4 md:px-8">
                     <h2 className="text-3xl font-bold text-green-600 text-center mb-8">
                         Nossa Localização
                     </h2>
-                    <div className="w-full h-96 rounded-lg overflow-hidden shadow-lg">
+                    <div className="relative w-full h-64 sm:h-80 md:h-96 rounded-lg overflow-hidden shadow-lg">
                         <iframe
-                            src="https://www.google.com/maps/embed?pb=..." // Insira o link do embed do Google Maps
+                            src="https://www.google.com/maps/embed?pb=..."
                             width="100%"
                             height="100%"
-                            frameBorder="0"
                             style={{ border: 0 }}
-                            allowFullScreen={true} 
+                            allowFullScreen={true}
                             aria-hidden="false"
-                            tabIndex={0} 
+                            tabIndex={0}
                         ></iframe>
                     </div>
                 </div>
