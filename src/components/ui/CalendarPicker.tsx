@@ -67,13 +67,13 @@ export function CalendarPicker(props: CalendarPickerProps) {
   };
 
   const handleClick = (iso: string) => {
-    if (multi) {
+    if (multi && 'onSelectDates' in props && props.onSelectDates) {
       const current = props.selectedDates ?? [];
       const next = current.includes(iso)
         ? current.filter((d) => d !== iso)
         : [...current, iso].sort();
       props.onSelectDates(next);
-    } else if (props.onSelectDate) {
+    } else if (!multi && 'onSelectDate' in props && props.onSelectDate) {
       props.onSelectDate(iso);
     }
   };
