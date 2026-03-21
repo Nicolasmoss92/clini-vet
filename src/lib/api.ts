@@ -47,6 +47,8 @@ export const animaisApi = {
   get: (id: string) => request<Animal>(`/animais/${id}`),
   create: (data: CreateAnimalData) =>
     request<Animal>('/animais', { method: 'POST', body: JSON.stringify(data) }),
+  update: (id: string, data: { comidaFavorita?: string; brincadeiraFavorita?: string; curiosidade?: string; dataNascimento?: string; peso?: number }) =>
+    request<Animal>(`/animais/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
   updateFoto: (id: string, foto: string) =>
     request<Animal>(`/animais/${id}/foto`, { method: 'PATCH', body: JSON.stringify({ foto }) }),
   delete: (id: string) => request<Animal>(`/animais/${id}`, { method: 'DELETE' }),
@@ -70,6 +72,8 @@ export const vacinasApi = {
   listByAnimal: (animalId: string) => request<Vacina[]>(`/vacinas/animal/${animalId}`),
   create: (data: CreateVacinaData) =>
     request<Vacina>('/vacinas', { method: 'POST', body: JSON.stringify(data) }),
+  update: (id: string, data: { nome?: string; dataAplicacao?: string; proximaDose?: string; observacoes?: string }) =>
+    request<Vacina>(`/vacinas/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
   delete: (id: string) => request<Vacina>(`/vacinas/${id}`, { method: 'DELETE' }),
 };
 
@@ -94,6 +98,10 @@ export interface Animal {
   raca: string | null;
   dataNascimento: string | null;
   foto: string | null;
+  peso: number | null;
+  comidaFavorita: string | null;
+  brincadeiraFavorita: string | null;
+  curiosidade: string | null;
   tutorId: string;
   createdAt: string;
   tutor?: { id: string; nome: string; email: string | null };
@@ -127,6 +135,7 @@ export interface CreateAnimalData {
   especie: string;
   raca?: string;
   dataNascimento?: string;
+  peso?: number;
   tutorId: string;
 }
 
