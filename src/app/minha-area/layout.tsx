@@ -33,15 +33,15 @@ export default function MinhaAreaLayout({ children }: { children: React.ReactNod
       {/* Topbar */}
       <header className="bg-green-600 h-16 flex items-center justify-between px-6 shadow-md">
         <div className="flex items-center gap-4">
-          <img src="/logo.png" alt="CliniVet" className="h-10 object-contain brightness-0 invert" />
+          <img src="/logo.png" alt="CliniVet" className="h-10 object-contain" />
           <span className="text-white font-semibold text-sm hidden sm:block">Área do Cliente</span>
         </div>
         <div className="flex items-center gap-3">
           <span className="text-green-100 text-sm hidden sm:block">Olá, {user.nome}</span>
-          <Link href="/home" className="text-white text-sm hidden sm:block hover:text-green-200 transition">Site</Link>
+          <Link href="/home" className="bg-white text-green-600 text-sm border border-white px-3 py-1 rounded-lg hover:bg-green-50 transition duration-300 hidden sm:block">Site</Link>
           <button
             onClick={() => { logout(); router.push('/home'); }}
-            className="text-white text-sm border border-white px-3 py-1 rounded-lg hover:bg-white hover:text-green-600 transition duration-300"
+            className="bg-white text-green-600 text-sm border border-white px-3 py-1 rounded-lg hover:bg-green-50 transition duration-300"
           >
             Sair
           </button>
