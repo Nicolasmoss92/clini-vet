@@ -31,6 +31,11 @@ export const authApi = {
       '/auth/login',
       { method: 'POST', body: JSON.stringify({ telefone, password }) }
     ),
+  register: (data: { telefone: string; password: string; email?: string }) =>
+    request<{ access_token: string; user: { id: string; nome: string; role: 'ADMIN' | 'TUTOR' } }>(
+      '/auth/register',
+      { method: 'POST', body: JSON.stringify(data) }
+    ),
 };
 
 // Users
