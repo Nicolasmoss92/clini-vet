@@ -9,7 +9,7 @@ export default function LoginPage() {
   const { login } = useAuth();
   const router = useRouter();
 
-  const [email, setEmail] = useState('');
+  const [telefone, setTelefone] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -19,7 +19,7 @@ export default function LoginPage() {
     setError('');
     setLoading(true);
     try {
-      const user = await login(email, password);
+      const user = await login(telefone, password);
       router.push(user.role === 'ADMIN' ? '/dashboard' : '/minha-area');
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Credenciais inválidas.');
@@ -49,13 +49,13 @@ export default function LoginPage() {
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
               <input
-                type="email"
+                type="tel"
                 required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="seu@email.com"
+                value={telefone}
+                onChange={(e) => setTelefone(e.target.value)}
+                placeholder="(11) 99999-9999"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-600 text-sm"
               />
             </div>

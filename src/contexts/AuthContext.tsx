@@ -13,7 +13,7 @@ interface AuthUser {
 interface AuthContextType {
   user: AuthUser | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<AuthUser>;
+  login: (telefone: string, password: string) => Promise<AuthUser>;
   logout: () => void;
 }
 
@@ -33,8 +33,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .finally(() => setLoading(false));
   }, []);
 
-  const login = async (email: string, password: string): Promise<AuthUser> => {
-    const { access_token, user: u } = await authApi.login(email, password);
+  const login = async (telefone: string, password: string): Promise<AuthUser> => {
+    const { access_token, user: u } = await authApi.login(telefone, password);
     localStorage.setItem('clinivet_token', access_token);
     setUser(u as AuthUser);
     return u as AuthUser;
