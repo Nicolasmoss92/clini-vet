@@ -65,10 +65,18 @@ export const agendamentosApi = {
   get: (id: string) => request<Agendamento>(`/agendamentos/${id}`),
   create: (data: CreateAgendamentoData) =>
     request<Agendamento>('/agendamentos', { method: 'POST', body: JSON.stringify(data) }),
-  updateStatus: (id: string, status: StatusAgendamento) =>
+  updateStatus: (
+    id: string,
+    status: StatusAgendamento,
+    financial?: {
+      descricaoConsulta?: string;
+      valorServico?: number;
+      medicamentos?: { nome: string; valor: number; quantidade?: number }[];
+    },
+  ) =>
     request<Agendamento>(`/agendamentos/${id}/status`, {
       method: 'PATCH',
-      body: JSON.stringify({ status }),
+      body: JSON.stringify({ status, ...financial }),
     }),
 };
 
@@ -112,6 +120,15 @@ export interface Animal {
   tutor?: { id: string; nome: string; email: string | null };
 }
 
+export interface Medicamento {
+  id: string;
+  agendamentoId: string;
+  nome: string;
+  valor: number;
+  quantidade: number;
+  createdAt: string;
+}
+
 export interface Agendamento {
   id: string;
   animalId: string;
@@ -122,6 +139,9 @@ export interface Agendamento {
   horaFim: string | null;
   status: StatusAgendamento;
   observacoes: string | null;
+  descricaoConsulta: string | null;
+  valorServico: number | null;
+  medicamentos: Medicamento[];
   animal: { id: string; nome: string; especie: string };
   tutor?: { id: string; nome: string; email: string | null };
 }

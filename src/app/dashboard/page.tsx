@@ -95,6 +95,13 @@ export default function DashboardPage() {
   const mesAtual = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
   const doMes = todos.filter((a) => a.data.split('T')[0].startsWith(mesAtual) && a.status !== 'CANCELADO');
   const totalMes = doMes.length || 1;
+
+  const concluidosMes = todos.filter((a) => a.data.split('T')[0].startsWith(mesAtual) && a.status === 'CONCLUIDO');
+  const receitaMes = concluidosMes.reduce((sum, a) => {
+    const servico = a.valorServico ?? 0;
+    const meds = (a.medicamentos ?? []).reduce((s, m) => s + m.valor * m.quantidade, 0);
+    return sum + servico + meds;
+  }, 0);
   const servicosMes = [
     { label: 'Consulta',     tipo: 'CONSULTA',   color: 'bg-green-500',  light: 'bg-green-100', text: 'text-green-700' },
     { label: 'Banho e Tosa', tipo: 'BANHO_TOSA', color: 'bg-blue-500',   light: 'bg-blue-100',  text: 'text-blue-700' },
@@ -117,16 +124,17 @@ export default function DashboardPage() {
       <h1 className="text-2xl font-bold text-green-600 mb-6">Visão Geral</h1>
 
       {/* Cards de totais */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {[
-          { label: 'Agendamentos ativos', value: totais.agendamentos, href: '/dashboard/agendamentos', top: 'border-t-green-600', text: 'text-green-600' },
-          { label: 'Aguardando aprovação', value: totais.aguardando, href: '/dashboard/agendamentos', top: 'border-t-yellow-400', text: 'text-yellow-500' },
-          { label: 'Cancelados', value: totais.cancelados, href: '/dashboard/agendamentos', top: 'border-t-red-500', text: 'text-red-500' },
+          { label: 'Agendamentos ativos', value: totais.agendamentos, href: '/dashboard/agendamentos', top: 'border-t-green-600', text: 'text-green-600', display: String(totais.agendamentos) },
+          { label: 'Aguardando aprovação', value: totais.aguardando, href: '/dashboard/agendamentos', top: 'border-t-yellow-400', text: 'text-yellow-500', display: String(totais.aguardando) },
+          { label: 'Cancelados', value: totais.cancelados, href: '/dashboard/agendamentos', top: 'border-t-red-500', text: 'text-red-500', display: String(totais.cancelados) },
+          { label: `Receita — ${now.toLocaleDateString('pt-BR', { month: 'long' })}`, value: receitaMes, href: '/dashboard/agendamentos', top: 'border-t-emerald-600', text: 'text-emerald-600', display: `R$ ${receitaMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` },
         ].map((card) => (
           <Link key={card.label} href={card.href}>
             <div className={`bg-white rounded-xl border border-gray-100 border-t-4 ${card.top} shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 p-6`}>
               <p className="text-sm text-gray-500 mb-1">{card.label}</p>
-              <p className={`text-3xl font-bold ${card.text}`}>{card.value}</p>
+              <p className={`text-3xl font-bold ${card.text}`}>{card.display}</p>
             </div>
           </Link>
         ))}
