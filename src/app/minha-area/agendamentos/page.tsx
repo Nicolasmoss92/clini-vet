@@ -431,6 +431,59 @@ export default function ClienteAgendamentosPage() {
                                   </div>
                                 )}
 
+                                {/* Nota fiscal — só para atendimentos concluídos */}
+                                {a.status === 'CONCLUIDO' && (a.descricaoConsulta || a.valorServico != null || (a.medicamentos?.length ?? 0) > 0) && (
+                                  <div className="border border-green-200 rounded-xl overflow-hidden">
+                                    <div className="bg-green-600 px-4 py-2 flex items-center justify-between">
+                                      <span className="text-xs font-semibold text-white uppercase tracking-wide">Resumo do Atendimento</span>
+                                    </div>
+                                    <div className="bg-white px-4 py-3 space-y-3 text-sm">
+                                      {a.descricaoConsulta && (
+                                        <div>
+                                          <p className="text-xs text-gray-400 mb-0.5">O que foi feito</p>
+                                          <p className="text-gray-700">{a.descricaoConsulta}</p>
+                                        </div>
+                                      )}
+
+                                      {(a.medicamentos?.length ?? 0) > 0 && (
+                                        <div>
+                                          <p className="text-xs text-gray-400 mb-1.5">Medicamentos / Produtos</p>
+                                          <div className="space-y-1">
+                                            {a.medicamentos.map((m) => (
+                                              <div key={m.id} className="flex items-center justify-between text-xs bg-gray-50 rounded-lg px-3 py-2">
+                                                <span className="text-gray-700 font-medium">{m.nome} <span className="font-normal text-gray-400">× {m.quantidade}</span></span>
+                                                <span className="text-gray-600">R$ {(m.valor * m.quantidade).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                              </div>
+                                            ))}
+                                          </div>
+                                        </div>
+                                      )}
+
+                                      <div className="border-t pt-3 space-y-1">
+                                        {a.valorServico != null && (
+                                          <div className="flex justify-between text-xs text-gray-500">
+                                            <span>Serviço</span>
+                                            <span>R$ {a.valorServico.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                          </div>
+                                        )}
+                                        {(a.medicamentos?.length ?? 0) > 0 && (
+                                          <div className="flex justify-between text-xs text-gray-500">
+                                            <span>Medicamentos</span>
+                                            <span>R$ {a.medicamentos.reduce((s, m) => s + m.valor * m.quantidade, 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                          </div>
+                                        )}
+                                        <div className="flex justify-between font-semibold text-sm text-green-700 pt-1">
+                                          <span>Total</span>
+                                          <span>R$ {(
+                                            (a.valorServico ?? 0) +
+                                            (a.medicamentos ?? []).reduce((s, m) => s + m.valor * m.quantidade, 0)
+                                          ).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                )}
+
                                 {(a.status === 'AGENDADO' || a.status === 'CONFIRMADO') && (
                                   <button
                                     type="button"

@@ -50,6 +50,19 @@ const filtroColorActive: Record<string, string> = {
   CANCELADO: 'bg-red-500 text-white border-red-500',
 };
 
+interface MedicamentoRow {
+  nome: string;
+  valor: string;
+  quantidade: string;
+}
+
+interface ConcluirModal {
+  agendamentoId: string;
+  descricaoConsulta: string;
+  valorServico: string;
+  medicamentos: MedicamentoRow[];
+}
+
 export default function AgendamentosPage() {
   const [agendamentos, setAgendamentos] = useState<Agendamento[]>([]);
   const [animais, setAnimais] = useState<Animal[]>([]);
@@ -58,6 +71,7 @@ export default function AgendamentosPage() {
   const [filtro, setFiltro] = useState<string>('TODOS');
   const [busca, setBusca] = useState('');
   const [showForm, setShowForm] = useState(false);
+  const [modal, setModal] = useState<ConcluirModal | null>(null);
 
   useEffect(() => {
     Promise.all([agendamentosApi.list(), animaisApi.list()])
@@ -66,14 +80,55 @@ export default function AgendamentosPage() {
   }, []);
 
   const handleStatus = async (id: string, status: StatusAgendamento) => {
+    if (status === 'CONCLUIDO') {
+      setModal({ agendamentoId: id, descricaoConsulta: '', valorServico: '', medicamentos: [] });
+      return;
+    }
     setUpdating(id);
     try {
       const updated = await agendamentosApi.updateStatus(id, status);
-      setAgendamentos((prev) => prev.map((a) => (a.id === id ? { ...a, status: updated.status } : a)));
+      setAgendamentos((prev) => prev.map((a) => (a.id === id ? { ...a, ...updated } : a)));
     } finally {
       setUpdating(null);
     }
   };
+
+  const handleConcluir = async () => {
+    if (!modal) return;
+    setUpdating(modal.agendamentoId);
+    try {
+      const medicamentos = modal.medicamentos
+        .filter((m) => m.nome.trim())
+        .map((m) => ({
+          nome: m.nome.trim(),
+          valor: parseFloat(m.valor) || 0,
+          quantidade: parseInt(m.quantidade) || 1,
+        }));
+
+      const updated = await agendamentosApi.updateStatus(modal.agendamentoId, 'CONCLUIDO', {
+        descricaoConsulta: modal.descricaoConsulta || undefined,
+        valorServico: modal.valorServico ? parseFloat(modal.valorServico) : undefined,
+        medicamentos: medicamentos.length ? medicamentos : undefined,
+      });
+
+      setAgendamentos((prev) => prev.map((a) => (a.id === modal.agendamentoId ? { ...a, ...updated } : a)));
+      setModal(null);
+    } finally {
+      setUpdating(null);
+    }
+  };
+
+  const addMed = () =>
+    setModal((m) => m ? { ...m, medicamentos: [...m.medicamentos, { nome: '', valor: '', quantidade: '1' }] } : m);
+
+  const removeMed = (i: number) =>
+    setModal((m) => m ? { ...m, medicamentos: m.medicamentos.filter((_, idx) => idx !== i) } : m);
+
+  const updateMed = (i: number, field: keyof MedicamentoRow, value: string) =>
+    setModal((m) => m ? {
+      ...m,
+      medicamentos: m.medicamentos.map((med, idx) => idx === i ? { ...med, [field]: value } : med),
+    } : m);
 
   if (loading) {
     return (
@@ -89,6 +144,119 @@ export default function AgendamentosPage() {
 
   return (
     <div className="max-w-6xl mx-auto">
+      {/* Modal de Conclusão */}
+      {modal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+            <div className="p-6 border-b">
+              <h2 className="text-lg font-semibold text-gray-700">Concluir Atendimento</h2>
+              <p className="text-sm text-gray-400 mt-1">Preencha os detalhes do serviço realizado</p>
+            </div>
+
+            <div className="p-6 space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Descrição do atendimento</label>
+                <textarea
+                  rows={3}
+                  placeholder="Ex: Consulta de rotina, exame físico completo..."
+                  value={modal.descricaoConsulta}
+                  onChange={(e) => setModal((m) => m ? { ...m, descricaoConsulta: e.target.value } : m)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-green-600 resize-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Valor do serviço (R$)</label>
+                <input
+                  type="number" min="0" step="0.01"
+                  placeholder="0,00"
+                  value={modal.valorServico}
+                  onChange={(e) => setModal((m) => m ? { ...m, valorServico: e.target.value } : m)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-green-600"
+                />
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="block text-sm font-medium text-gray-700">Medicamentos / Produtos</label>
+                  <button type="button" onClick={addMed}
+                    className="text-xs text-green-600 border border-green-200 px-3 py-1 rounded-lg hover:bg-green-50 transition">
+                    + Adicionar
+                  </button>
+                </div>
+
+                {modal.medicamentos.length === 0 ? (
+                  <p className="text-xs text-gray-400 italic">Nenhum medicamento adicionado.</p>
+                ) : (
+                  <div className="space-y-2">
+                    {modal.medicamentos.map((med, i) => (
+                      <div key={i} className="grid grid-cols-[1fr_100px_60px_32px] gap-2 items-center">
+                        <input
+                          placeholder="Nome do produto"
+                          value={med.nome}
+                          onChange={(e) => updateMed(i, 'nome', e.target.value)}
+                          className="px-3 py-1.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-green-600"
+                        />
+                        <input
+                          type="number" min="0" step="0.01" placeholder="Valor"
+                          value={med.valor}
+                          onChange={(e) => updateMed(i, 'valor', e.target.value)}
+                          className="px-3 py-1.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-green-600"
+                        />
+                        <input
+                          type="number" min="1" step="1" placeholder="Qtd"
+                          value={med.quantidade}
+                          onChange={(e) => updateMed(i, 'quantidade', e.target.value)}
+                          className="px-3 py-1.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-green-600"
+                        />
+                        <button type="button" onClick={() => removeMed(i)}
+                          className="w-8 h-8 flex items-center justify-center rounded-lg border border-red-200 text-red-400 hover:bg-red-50 transition text-sm">
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Resumo do total */}
+              {(modal.valorServico || modal.medicamentos.some((m) => m.nome && m.valor)) && (
+                <div className="bg-green-50 border border-green-200 rounded-lg px-4 py-3 text-sm">
+                  <div className="flex justify-between text-gray-600 mb-1">
+                    <span>Serviço</span>
+                    <span>R$ {parseFloat(modal.valorServico || '0').toFixed(2)}</span>
+                  </div>
+                  {modal.medicamentos.filter((m) => m.nome && m.valor).map((m, i) => (
+                    <div key={i} className="flex justify-between text-gray-600 mb-1">
+                      <span>{m.nome} × {m.quantidade || 1}</span>
+                      <span>R$ {(parseFloat(m.valor || '0') * (parseInt(m.quantidade) || 1)).toFixed(2)}</span>
+                    </div>
+                  ))}
+                  <div className="flex justify-between font-semibold text-green-700 border-t border-green-200 pt-2 mt-2">
+                    <span>Total</span>
+                    <span>R$ {(
+                      parseFloat(modal.valorServico || '0') +
+                      modal.medicamentos.reduce((sum, m) => sum + (parseFloat(m.valor || '0') * (parseInt(m.quantidade) || 1)), 0)
+                    ).toFixed(2)}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="p-6 border-t flex justify-end gap-3">
+              <button type="button" onClick={() => setModal(null)}
+                className="px-4 py-2 text-sm border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-50 transition">
+                Cancelar
+              </button>
+              <button type="button" onClick={handleConcluir} disabled={updating === modal.agendamentoId}
+                className="px-6 py-2 text-sm bg-green-600 text-white rounded-lg border border-green-600 hover:bg-white hover:text-green-600 transition disabled:opacity-50">
+                {updating === modal.agendamentoId ? 'Salvando...' : 'Concluir Atendimento'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-green-600">Agendamentos</h1>
         <button
