@@ -233,7 +233,7 @@ export default function DashboardPage() {
                     <div>
                       <p className="text-sm font-medium text-gray-700">{a.animal.nome}</p>
                       <p className="text-xs text-gray-500">{tipoLabel[a.tipo]} · {a.horaInicio}{a.horaFim ? ` até ${a.horaFim}` : ''}</p>
-                      {a.observacoes && <p className="text-xs text-gray-400 mt-0.5 italic">"{a.observacoes}"</p>}
+                      {a.observacoes && <p className="text-xs text-gray-400 mt-0.5 italic">&quot;{a.observacoes}&quot;</p>}
                     </div>
                     <span className={`px-2 py-0.5 rounded-full text-xs font-medium flex-shrink-0 ml-3 ${statusColor[a.status]}`}>
                       {statusLabel[a.status]}
