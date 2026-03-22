@@ -26,10 +26,10 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
 
 // Auth
 export const authApi = {
-  login: (email: string, password: string) =>
+  login: (telefone: string, password: string) =>
     request<{ access_token: string; user: { id: string; nome: string; email: string; role: 'ADMIN' | 'TUTOR' } }>(
       '/auth/login',
-      { method: 'POST', body: JSON.stringify({ email, password }) }
+      { method: 'POST', body: JSON.stringify({ telefone, password }) }
     ),
 };
 
