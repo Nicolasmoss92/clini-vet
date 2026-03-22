@@ -135,23 +135,24 @@ export default function DashboardPage() {
       {/* Calendário semanal */}
       <div className="bg-white rounded-xl border border-gray-100 shadow-md p-6 mb-8">
         {/* Header navegação */}
-        <div className="flex items-center justify-between mb-5">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
           <h2 className="text-lg font-semibold text-gray-700">Calendário da Semana</h2>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             <button type="button" onClick={prevWeek}
               className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 transition text-lg leading-none">‹</button>
             <button type="button" onClick={goToday}
               className="text-xs text-green-600 border border-green-200 px-3 py-1 rounded-lg hover:bg-green-50 transition">
               Hoje
             </button>
-            <span className="text-sm font-medium text-gray-600 min-w-[180px] text-center">{weekLabel}</span>
+            <span className="text-sm font-medium text-gray-600 text-center">{weekLabel}</span>
             <button type="button" onClick={nextWeek}
               className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 transition text-lg leading-none">›</button>
           </div>
         </div>
 
-        {/* Grid Seg–Sex */}
-        <div className="grid grid-cols-7 gap-3">
+        {/* Grid Seg–Dom */}
+        <div className="overflow-x-auto -mx-2 px-2">
+        <div className="grid grid-cols-7 gap-2 min-w-[560px]">
           {weekDays.map((day, i) => {
             const iso = toISO(day);
             const ags = agByDay(iso);
@@ -206,6 +207,8 @@ export default function DashboardPage() {
               </div>
             );
           })}
+        </div>
+
         </div>
 
         {/* Legenda */}
