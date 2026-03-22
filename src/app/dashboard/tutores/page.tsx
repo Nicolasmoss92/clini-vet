@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { usersApi, User } from '@/lib/api';
+import { maskTelefone } from '@/lib/masks';
 
 export default function TutoresPage() {
   const [tutores, setTutores] = useState<User[]>([]);
@@ -71,7 +72,7 @@ export default function TutoresPage() {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Telefone * <span className="text-gray-400 font-normal">(XX) XXXXX-XXXX</span></label>
-              <input required value={form.telefone} onChange={(e) => setForm({ ...form, telefone: e.target.value })}
+              <input required value={form.telefone} onChange={(e) => setForm({ ...form, telefone: maskTelefone(e.target.value) })}
                 placeholder="(11) 99999-9999"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-green-600" />
             </div>

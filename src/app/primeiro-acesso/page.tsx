@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { authApi } from '@/lib/api';
+import { maskTelefone } from '@/lib/masks';
 import Link from 'next/link';
 
 export default function PrimeiroAcessoPage() {
@@ -68,7 +69,7 @@ export default function PrimeiroAcessoPage() {
                 type="tel"
                 required
                 value={telefone}
-                onChange={(e) => setTelefone(e.target.value)}
+                onChange={(e) => setTelefone(maskTelefone(e.target.value))}
                 placeholder="(11) 99999-9999"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-600 text-sm"
               />

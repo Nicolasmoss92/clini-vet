@@ -3,6 +3,7 @@
 import { Suspense, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { maskTelefone } from '@/lib/masks';
 import Link from 'next/link';
 
 function LoginForm() {
@@ -54,7 +55,7 @@ function LoginForm() {
             type="tel"
             required
             value={telefone}
-            onChange={(e) => setTelefone(e.target.value)}
+            onChange={(e) => setTelefone(maskTelefone(e.target.value))}
             placeholder="(11) 99999-9999"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-600 text-sm"
           />
