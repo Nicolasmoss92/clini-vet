@@ -48,6 +48,23 @@ export default function MinhaAreaLayout({ children }: { children: React.ReactNod
         </div>
       </header>
 
+      {/* Mobile nav */}
+      <div className="md:hidden bg-white border-b flex gap-1 px-3 py-2 overflow-x-auto">
+        {navItems.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition duration-200 ${
+              pathname === item.href
+                ? 'bg-green-600 text-white'
+                : 'text-gray-600 hover:bg-green-50 hover:text-green-600'
+            }`}
+          >
+            {item.label}
+          </Link>
+        ))}
+      </div>
+
       <div className="flex flex-1">
         {/* Sidebar desktop */}
         <aside className="w-56 bg-white shadow-md hidden md:flex flex-col pt-6">
@@ -68,24 +85,7 @@ export default function MinhaAreaLayout({ children }: { children: React.ReactNod
           </nav>
         </aside>
 
-        {/* Nav mobile */}
-        <div className="md:hidden w-full bg-white border-b flex gap-1 px-3 py-2 overflow-x-auto absolute top-16 left-0 z-10">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition duration-200 ${
-                pathname === item.href
-                  ? 'bg-green-600 text-white'
-                  : 'text-gray-600 hover:bg-green-50 hover:text-green-600'
-              }`}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </div>
-
-        <main className="flex-1 p-6 bg-gray-50 md:mt-0 mt-10">{children}</main>
+        <main className="flex-1 p-4 md:p-6 bg-gray-50">{children}</main>
       </div>
     </div>
   );
