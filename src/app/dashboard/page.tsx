@@ -35,7 +35,7 @@ const DIAS_SEMANA = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
 
 function getMondayOf(date: Date): Date {
   const d = new Date(date);
-  const day = d.getDay(); // 0=dom, 1=seg...
+  const day = d.getDay();
   const diff = day === 0 ? -6 : 1 - day;
   d.setDate(d.getDate() + diff);
   d.setHours(0, 0, 0, 0);
@@ -91,26 +91,6 @@ export default function DashboardPage() {
     .sort((a, b) => a.data.localeCompare(b.data) || a.horaInicio.localeCompare(b.horaInicio))
     .slice(0, 5);
 
-  const now = new Date();
-  const mesAtual = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-  const doMes = todos.filter((a) => a.data.split('T')[0].startsWith(mesAtual) && a.status !== 'CANCELADO');
-  const totalMes = doMes.length || 1;
-
-  const concluidosMes = todos.filter((a) => a.data.split('T')[0].startsWith(mesAtual) && a.status === 'CONCLUIDO');
-  const receitaMes = concluidosMes.reduce((sum, a) => {
-    const servico = a.valorServico ?? 0;
-    const meds = (a.medicamentos ?? []).reduce((s, m) => s + m.valor * m.quantidade, 0);
-    return sum + servico + meds;
-  }, 0);
-  const servicosMes = [
-    { label: 'Consulta',     tipo: 'CONSULTA',   color: 'bg-green-500',  light: 'bg-green-100', text: 'text-green-700' },
-    { label: 'Banho e Tosa', tipo: 'BANHO_TOSA', color: 'bg-blue-500',   light: 'bg-blue-100',  text: 'text-blue-700' },
-    { label: 'Pet Sister',   tipo: 'PETSITTER',  color: 'bg-purple-500', light: 'bg-purple-100',text: 'text-purple-700' },
-  ].map((s) => {
-    const count = doMes.filter((a) => a.tipo === s.tipo).length;
-    return { ...s, count, pct: Math.round((count / totalMes) * 100) };
-  }).sort((a, b) => b.count - a.count);
-
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -124,17 +104,16 @@ export default function DashboardPage() {
       <h1 className="text-2xl font-bold text-green-600 mb-6">Visão Geral</h1>
 
       {/* Cards de totais */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         {[
-          { label: 'Agendamentos ativos', value: totais.agendamentos, href: '/dashboard/agendamentos', top: 'border-t-green-600', text: 'text-green-600', display: String(totais.agendamentos) },
-          { label: 'Aguardando aprovação', value: totais.aguardando, href: '/dashboard/agendamentos', top: 'border-t-yellow-400', text: 'text-yellow-500', display: String(totais.aguardando) },
-          { label: 'Cancelados', value: totais.cancelados, href: '/dashboard/agendamentos', top: 'border-t-red-500', text: 'text-red-500', display: String(totais.cancelados) },
-          { label: `Receita — ${now.toLocaleDateString('pt-BR', { month: 'long' })}`, value: receitaMes, href: '/dashboard/agendamentos', top: 'border-t-emerald-600', text: 'text-emerald-600', display: `R$ ${receitaMes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` },
+          { label: 'Agendamentos ativos', value: totais.agendamentos, href: '/dashboard/agendamentos', top: 'border-t-green-600', text: 'text-green-600' },
+          { label: 'Aguardando aprovação', value: totais.aguardando, href: '/dashboard/agendamentos', top: 'border-t-yellow-400', text: 'text-yellow-500' },
+          { label: 'Cancelados', value: totais.cancelados, href: '/dashboard/agendamentos', top: 'border-t-red-500', text: 'text-red-500' },
         ].map((card) => (
           <Link key={card.label} href={card.href}>
             <div className={`bg-white rounded-xl border border-gray-100 border-t-4 ${card.top} shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 p-6`}>
               <p className="text-sm text-gray-500 mb-1">{card.label}</p>
-              <p className={`text-3xl font-bold ${card.text}`}>{card.display}</p>
+              <p className={`text-3xl font-bold ${card.text}`}>{card.value}</p>
             </div>
           </Link>
         ))}
@@ -142,7 +121,6 @@ export default function DashboardPage() {
 
       {/* Calendário semanal */}
       <div className="bg-white rounded-xl border border-gray-100 shadow-md p-6 mb-8">
-        {/* Header navegação */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
           <h2 className="text-lg font-semibold text-gray-700">Calendário da Semana</h2>
           <div className="flex items-center gap-2 flex-wrap">
@@ -158,65 +136,61 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Grid Seg–Dom */}
         <div className="overflow-x-auto -mx-2 px-2">
-        <div className="grid grid-cols-7 gap-2 min-w-[560px]">
-          {weekDays.map((day, i) => {
-            const iso = toISO(day);
-            const ags = agByDay(iso);
-            const isToday = iso === todayISO;
-            const isSelected = selectedDay === iso;
+          <div className="grid grid-cols-7 gap-2 min-w-[560px]">
+            {weekDays.map((day, i) => {
+              const iso = toISO(day);
+              const ags = agByDay(iso);
+              const isToday = iso === todayISO;
+              const isSelected = selectedDay === iso;
 
-            return (
-              <div
-                key={iso}
-                onClick={() => setSelectedDay(isSelected ? null : iso)}
-                className={`rounded-xl border cursor-pointer transition-all duration-200 ${
-                  isSelected
-                    ? 'border-green-500 shadow-md'
-                    : isToday
-                    ? 'border-green-300 bg-green-50'
-                    : 'border-gray-100 hover:border-green-200 hover:bg-gray-50'
-                }`}
-              >
-                {/* Cabeçalho do dia */}
-                <div className={`px-3 py-2 border-b ${isToday ? 'border-green-200' : 'border-gray-100'}`}>
-                  <p className="text-xs font-semibold text-gray-500 uppercase">{DIAS_SEMANA[i]}</p>
-                  <p className={`text-lg font-bold leading-tight ${isToday ? 'text-green-600' : 'text-gray-700'}`}>
-                    {day.getDate()}
-                  </p>
-                  <p className="text-xs text-gray-400">
-                    {day.toLocaleDateString('pt-BR', { month: 'short' })}
-                  </p>
-                </div>
+              return (
+                <div
+                  key={iso}
+                  onClick={() => setSelectedDay(isSelected ? null : iso)}
+                  className={`rounded-xl border cursor-pointer transition-all duration-200 ${
+                    isSelected
+                      ? 'border-green-500 shadow-md'
+                      : isToday
+                      ? 'border-green-300 bg-green-50'
+                      : 'border-gray-100 hover:border-green-200 hover:bg-gray-50'
+                  }`}
+                >
+                  <div className={`px-3 py-2 border-b ${isToday ? 'border-green-200' : 'border-gray-100'}`}>
+                    <p className="text-xs font-semibold text-gray-500 uppercase">{DIAS_SEMANA[i]}</p>
+                    <p className={`text-lg font-bold leading-tight ${isToday ? 'text-green-600' : 'text-gray-700'}`}>
+                      {day.getDate()}
+                    </p>
+                    <p className="text-xs text-gray-400">
+                      {day.toLocaleDateString('pt-BR', { month: 'short' })}
+                    </p>
+                  </div>
 
-                {/* Agendamentos do dia */}
-                <div className="p-2 min-h-[100px] flex flex-col gap-1.5">
-                  {ags.length === 0 ? (
-                    <p className="text-xs text-gray-300 text-center mt-4">—</p>
-                  ) : (
-                    ags.slice(0, 4).map((a) => (
-                      <div
-                        key={a.id}
-                        className={`flex items-start gap-1.5 px-2 py-1.5 rounded-lg text-xs ${statusColor[a.status]}`}
-                      >
-                        <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 mt-0.5 ${statusDot[a.status]}`} />
-                        <div className="min-w-0">
-                          <p className="font-medium truncate">{a.animal.nome}</p>
-                          <p className="opacity-75">{a.horaInicio} · {tipoLabel[a.tipo]}</p>
+                  <div className="p-2 min-h-[100px] flex flex-col gap-1.5">
+                    {ags.length === 0 ? (
+                      <p className="text-xs text-gray-300 text-center mt-4">—</p>
+                    ) : (
+                      ags.slice(0, 4).map((a) => (
+                        <div
+                          key={a.id}
+                          className={`flex items-start gap-1.5 px-2 py-1.5 rounded-lg text-xs ${statusColor[a.status]}`}
+                        >
+                          <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 mt-0.5 ${statusDot[a.status]}`} />
+                          <div className="min-w-0">
+                            <p className="font-medium truncate">{a.animal.nome}</p>
+                            <p className="opacity-75">{a.horaInicio} · {tipoLabel[a.tipo]}</p>
+                          </div>
                         </div>
-                      </div>
-                    ))
-                  )}
-                  {ags.length > 4 && (
-                    <p className="text-xs text-gray-400 text-center">+{ags.length - 4} mais</p>
-                  )}
+                      ))
+                    )}
+                    {ags.length > 4 && (
+                      <p className="text-xs text-gray-400 text-center">+{ags.length - 4} mais</p>
+                    )}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-
+              );
+            })}
+          </div>
         </div>
 
         {/* Legenda */}
@@ -259,35 +233,6 @@ export default function DashboardPage() {
             </div>
           );
         })()}
-      </div>
-
-      {/* Serviços do mês */}
-      <div className="bg-white rounded-xl border border-gray-100 shadow-md p-6 mb-8">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-700">Serviços do Mês</h2>
-          <span className="text-xs text-gray-400">
-            {now.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })} · {doMes.length} agendamento{doMes.length !== 1 ? 's' : ''}
-          </span>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {servicosMes.map((s, i) => (
-            <div key={s.tipo} className={`rounded-xl p-4 ${s.light}`}>
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  {i === 0 && <span className="text-xs font-bold text-gray-500">🥇</span>}
-                  {i === 1 && <span className="text-xs font-bold text-gray-500">🥈</span>}
-                  {i === 2 && <span className="text-xs font-bold text-gray-500">🥉</span>}
-                  <span className={`text-sm font-semibold ${s.text}`}>{s.label}</span>
-                </div>
-                <span className={`text-xl font-bold ${s.text}`}>{s.pct}%</span>
-              </div>
-              <div className="w-full bg-white bg-opacity-60 rounded-full h-2 mb-2">
-                <div className={`${s.color} h-2 rounded-full transition-all duration-500`} style={{ width: `${s.pct}%` }} />
-              </div>
-              <p className={`text-xs ${s.text} opacity-75`}>{s.count} agendamento{s.count !== 1 ? 's' : ''}</p>
-            </div>
-          ))}
-        </div>
       </div>
 
       {/* Próximos agendamentos */}
