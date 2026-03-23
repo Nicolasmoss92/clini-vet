@@ -4,26 +4,9 @@ import { useEffect, useState } from 'react';
 import { agendamentosApi, animaisApi, Agendamento, Animal, CreateAgendamentoData, TipoAgendamento } from '@/lib/api';
 import { CalendarPicker } from '@/components/ui/CalendarPicker';
 import { TimeSlotPicker } from '@/components/ui/TimeSlotPicker';
-
-const statusLabel: Record<string, string> = {
-  AGENDADO: 'Agendado',
-  CONFIRMADO: 'Confirmado',
-  CONCLUIDO: 'Concluído',
-  CANCELADO: 'Cancelado',
-};
-
-const statusColor: Record<string, string> = {
-  AGENDADO: 'bg-yellow-100 text-yellow-700',
-  CONFIRMADO: 'bg-blue-100 text-blue-700',
-  CONCLUIDO: 'bg-green-100 text-green-700',
-  CANCELADO: 'bg-red-100 text-red-600',
-};
-
-const tipoLabel: Record<string, string> = {
-  CONSULTA: 'Consulta',
-  BANHO_TOSA: 'Banho e Tosa',
-  PETSITTER: 'Pet Sister',
-};
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import StatusBadge from '@/components/ui/StatusBadge';
+import { TIPO_LABEL, STATUS_LABEL, STATUS_COLOR } from '@/lib/constants';
 
 interface FormState {
   animalId: string;
@@ -143,13 +126,7 @@ export default function ClienteAgendamentosPage() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-4 border-green-600 border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-  }
+  if (loading) return <LoadingSpinner />;
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -296,7 +273,7 @@ export default function ClienteAgendamentosPage() {
                       </span>
                     )}
                     <span className="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full font-medium">
-                      {tipoLabel[form.tipo]}
+                      {TIPO_LABEL[form.tipo]}
                     </span>
                     <span className="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full font-medium">
                       📅 {new Date(form.data + 'T00:00:00').toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'long' })}
@@ -390,14 +367,12 @@ export default function ClienteAgendamentosPage() {
                                 <div>
                                   <p className="font-semibold text-gray-700">{a.animal.nome}</p>
                                   <p className="text-sm text-gray-500">
-                                    {tipoLabel[a.tipo]} · {new Date(a.data).toLocaleDateString('pt-BR')} · {a.horaInicio}{a.horaFim ? ` até ${a.horaFim}` : ''}
+                                    {TIPO_LABEL[a.tipo]} · {new Date(a.data).toLocaleDateString('pt-BR')} · {a.horaInicio}{a.horaFim ? ` até ${a.horaFim}` : ''}
                                   </p>
                                 </div>
                               </div>
                               <div className="flex items-center gap-3 flex-shrink-0">
-                                <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${statusColor[a.status]}`}>
-                                  {statusLabel[a.status]}
-                                </span>
+                                <StatusBadge status={a.status} />
                                 <span className="text-gray-400 text-sm">{isExpanded ? '▲' : '▼'}</span>
                               </div>
                             </button>
@@ -420,7 +395,7 @@ export default function ClienteAgendamentosPage() {
                                   </div>
                                   <div>
                                     <p className="text-xs text-gray-400 mb-0.5">Tipo</p>
-                                    <p className="font-medium text-gray-700">{tipoLabel[a.tipo]}</p>
+                                    <p className="font-medium text-gray-700">{TIPO_LABEL[a.tipo]}</p>
                                   </div>
                                 </div>
 

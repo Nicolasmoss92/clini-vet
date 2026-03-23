@@ -4,11 +4,8 @@ import { useEffect, useState } from 'react';
 import { agendamentosApi, animaisApi, Agendamento, Animal } from '@/lib/api';
 import { useAuth } from '@/contexts/AuthContext';
 
-const tipoLabel: Record<string, string> = {
-  CONSULTA: 'Consulta',
-  BANHO_TOSA: 'Banho e Tosa',
-  PETSITTER: 'Pet Sitter',
-};
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import { TIPO_LABEL } from '@/lib/constants';
 
 function formatCurrency(value: number) {
   return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -164,7 +161,7 @@ export default function HistoricoFinanceiroPage() {
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-gray-800">{ag.animal.nome}</p>
-                      <p className="text-xs text-gray-500">{tipoLabel[ag.tipo]} · {ag.horaInicio}</p>
+                      <p className="text-xs text-gray-500">{TIPO_LABEL[ag.tipo]} · {ag.horaInicio}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -195,7 +192,7 @@ export default function HistoricoFinanceiroPage() {
                       <div className="flex flex-col gap-1.5">
                         {ag.valorServico != null && ag.valorServico > 0 && (
                           <div className="flex items-center justify-between text-sm">
-                            <span className="text-gray-600">{tipoLabel[ag.tipo]}</span>
+                            <span className="text-gray-600">{TIPO_LABEL[ag.tipo]}</span>
                             <span className="font-medium text-gray-800">{formatCurrency(ag.valorServico)}</span>
                           </div>
                         )}

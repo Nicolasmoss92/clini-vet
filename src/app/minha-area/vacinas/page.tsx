@@ -2,15 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { vacinasApi, animaisApi, Vacina, Animal } from '@/lib/api';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import { diasParaVencer } from '@/lib/dateUtils';
 
 interface VacinaComAnimal extends Vacina {
   animal: Animal;
-}
-
-function diasParaVencer(data: string): number {
-  const hoje = new Date();
-  hoje.setHours(0, 0, 0, 0);
-  return Math.round((new Date(data).getTime() - hoje.getTime()) / 86400000);
 }
 
 function statusVacina(proximaDose: string | null): 'vencida' | 'urgente' | 'ok' | 'sem-dose' {
@@ -55,13 +51,7 @@ export default function VacinasPage() {
     }).finally(() => setLoading(false));
   }, []);
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-4 border-green-600 border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-  }
+  if (loading) return <LoadingSpinner />;
 
   const filtradas = vacinas.filter((v) => {
     const okPet = filtroPet ? v.animal.id === filtroPet : true;

@@ -3,52 +3,17 @@
 import { useEffect, useState } from 'react';
 import { agendamentosApi, animaisApi, Agendamento, Animal, StatusAgendamento } from '@/lib/api';
 import { AgendamentoForm } from '@/components/AgendamentoForm';
-
-const statusLabel: Record<string, string> = {
-  AGENDADO: 'Agendado',
-  CONFIRMADO: 'Confirmado',
-  CONCLUIDO: 'Concluído',
-  CANCELADO: 'Cancelado',
-};
-
-const statusColor: Record<string, string> = {
-  AGENDADO: 'bg-yellow-100 text-yellow-700',
-  CONFIRMADO: 'bg-blue-100 text-blue-700',
-  CONCLUIDO: 'bg-green-100 text-green-700',
-  CANCELADO: 'bg-red-100 text-red-600',
-};
-
-const tipoLabel: Record<string, string> = {
-  CONSULTA: 'Consulta',
-  BANHO_TOSA: 'Banho e Tosa',
-  PETSITTER: 'Pet Sister',
-};
-
-const statusOptions: StatusAgendamento[] = ['AGENDADO', 'CONFIRMADO', 'CONCLUIDO', 'CANCELADO'];
-
-const filtros = [
-  { label: 'Todos', value: 'TODOS' },
-  { label: 'Pendentes', value: 'AGENDADO' },
-  { label: 'Confirmados', value: 'CONFIRMADO' },
-  { label: 'Concluídos', value: 'CONCLUIDO' },
-  { label: 'Cancelados', value: 'CANCELADO' },
-] as const;
-
-const filtroColor: Record<string, string> = {
-  TODOS: 'bg-gray-100 text-gray-700 border-gray-200',
-  AGENDADO: 'bg-yellow-100 text-yellow-700 border-yellow-300',
-  CONFIRMADO: 'bg-blue-100 text-blue-700 border-blue-300',
-  CONCLUIDO: 'bg-green-100 text-green-700 border-green-300',
-  CANCELADO: 'bg-red-100 text-red-600 border-red-300',
-};
-
-const filtroColorActive: Record<string, string> = {
-  TODOS: 'bg-gray-700 text-white border-gray-700',
-  AGENDADO: 'bg-yellow-400 text-white border-yellow-400',
-  CONFIRMADO: 'bg-blue-500 text-white border-blue-500',
-  CONCLUIDO: 'bg-green-600 text-white border-green-600',
-  CANCELADO: 'bg-red-500 text-white border-red-500',
-};
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import StatusBadge from '@/components/ui/StatusBadge';
+import Pagination from '@/components/ui/Pagination';
+import {
+  TIPO_LABEL,
+  STATUS_LABEL,
+  STATUS_OPTIONS,
+  FILTRO_OPTIONS,
+  FILTRO_COLOR,
+  FILTRO_COLOR_ACTIVE,
+} from '@/lib/constants';
 
 interface MedicamentoRow {
   nome: string;
@@ -72,6 +37,8 @@ export default function AgendamentosPage() {
   const [busca, setBusca] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [modal, setModal] = useState<ConcluirModal | null>(null);
+  const [page, setPage] = useState(0);
+  const PAGE_SIZE = 15;
 
   useEffect(() => {
     Promise.all([agendamentosApi.list(), animaisApi.list()])
@@ -131,16 +98,16 @@ export default function AgendamentosPage() {
     } : m);
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-4 border-green-600 border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
+    return <LoadingSpinner />;
   }
 
   const lista = agendamentos
     .filter((a) => filtro === 'TODOS' || a.status === filtro)
-    .filter((a) => !busca || a.animal.nome.toLowerCase().includes(busca.toLowerCase()) || a.tutor?.nome?.toLowerCase().includes(busca.toLowerCase()));
+    .filter((a) => !busca || a.animal.nome.toLowerCase().includes(busca.toLowerCase()) || a.tutor?.nome?.toLowerCase().includes(busca.toLowerCase()))
+    .sort((a, b) => b.data.localeCompare(a.data) || b.horaInicio.localeCompare(a.horaInicio));
+
+  const totalPages = Math.ceil(lista.length / PAGE_SIZE);
+  const paginated = lista.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -288,7 +255,7 @@ export default function AgendamentosPage() {
           type="text"
           placeholder="Buscar por animal ou tutor..."
           value={busca}
-          onChange={(e) => setBusca(e.target.value)}
+          onChange={(e) => { setBusca(e.target.value); setPage(0); }}
           className="w-full sm:w-80 pl-9 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-green-600"
         />
         <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -298,13 +265,13 @@ export default function AgendamentosPage() {
 
       {/* Filtros */}
       <div className="flex flex-wrap gap-2 mb-4">
-        {filtros.map((f) => (
+        {FILTRO_OPTIONS.map((f) => (
           <button
             key={f.value}
             type="button"
-            onClick={() => setFiltro(f.value)}
+            onClick={() => { setFiltro(f.value); setPage(0); }}
             className={`px-4 py-1.5 rounded-full text-xs font-medium border transition duration-200 ${
-              filtro === f.value ? filtroColorActive[f.value] : filtroColor[f.value]
+              filtro === f.value ? FILTRO_COLOR_ACTIVE[f.value] : FILTRO_COLOR[f.value]
             }`}
           >
             {f.label}
@@ -334,11 +301,11 @@ export default function AgendamentosPage() {
                 </tr>
               </thead>
               <tbody>
-                {lista.map((a) => (
+                {paginated.map((a) => (
                   <tr key={a.id} className="border-b last:border-0 hover:bg-gray-50">
                     <td className="px-4 py-3 font-medium text-gray-700">{a.animal.nome}</td>
                     <td className="px-4 py-3 text-gray-600">{a.tutor?.nome ?? '—'}</td>
-                    <td className="px-4 py-3 text-gray-600">{tipoLabel[a.tipo]}</td>
+                    <td className="px-4 py-3 text-gray-600">{TIPO_LABEL[a.tipo]}</td>
                     <td className="px-4 py-3 text-gray-600">{new Date(a.data).toLocaleDateString('pt-BR')}</td>
                     <td className="px-4 py-3 text-gray-600">{a.horaInicio}</td>
                     <td className="px-4 py-3 text-gray-500 max-w-[200px]">
@@ -349,9 +316,7 @@ export default function AgendamentosPage() {
                       )}
                     </td>
                     <td className="px-4 py-3">
-                      <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${statusColor[a.status]}`}>
-                        {statusLabel[a.status]}
-                      </span>
+                      <StatusBadge status={a.status} />
                     </td>
                     <td className="px-4 py-3">
                       <select
@@ -360,8 +325,8 @@ export default function AgendamentosPage() {
                         onChange={(e) => handleStatus(a.id, e.target.value as StatusAgendamento)}
                         className="text-xs border border-gray-300 rounded-lg px-2 py-1 focus:outline-none focus:border-green-600 disabled:opacity-50"
                       >
-                        {statusOptions.map((s) => (
-                          <option key={s} value={s}>{statusLabel[s]}</option>
+                        {STATUS_OPTIONS.map((s) => (
+                          <option key={s} value={s}>{STATUS_LABEL[s]}</option>
                         ))}
                       </select>
                     </td>
@@ -369,6 +334,61 @@ export default function AgendamentosPage() {
                 ))}
               </tbody>
             </table>
+          </div>
+        )}
+
+        {/* Paginação */}
+        {totalPages > 1 && (
+          <div className="flex items-center justify-between px-4 py-3 border-t border-gray-100">
+            <p className="text-xs text-gray-400">
+              {page * PAGE_SIZE + 1}–{Math.min((page + 1) * PAGE_SIZE, lista.length)} de {lista.length} agendamentos
+            </p>
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => setPage(0)}
+                disabled={page === 0}
+                className="px-2 py-1 text-xs rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 disabled:opacity-30 transition"
+              >«</button>
+              <button
+                onClick={() => setPage((p) => p - 1)}
+                disabled={page === 0}
+                className="px-3 py-1 text-xs rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 disabled:opacity-30 transition"
+              >‹ Anterior</button>
+
+              {Array.from({ length: totalPages }, (_, i) => i)
+                .filter((i) => i === 0 || i === totalPages - 1 || Math.abs(i - page) <= 1)
+                .reduce<(number | '...')[]>((acc, i, idx, arr) => {
+                  if (idx > 0 && typeof arr[idx - 1] === 'number' && (i as number) - (arr[idx - 1] as number) > 1) acc.push('...');
+                  acc.push(i);
+                  return acc;
+                }, [])
+                .map((item, idx) =>
+                  item === '...' ? (
+                    <span key={`ellipsis-${idx}`} className="px-2 text-xs text-gray-400">…</span>
+                  ) : (
+                    <button
+                      key={item}
+                      onClick={() => setPage(item as number)}
+                      className={`w-8 h-7 text-xs rounded-lg border transition ${
+                        page === item
+                          ? 'bg-green-600 text-white border-green-600'
+                          : 'border-gray-200 text-gray-600 hover:bg-gray-50'
+                      }`}
+                    >{(item as number) + 1}</button>
+                  )
+                )}
+
+              <button
+                onClick={() => setPage((p) => p + 1)}
+                disabled={page === totalPages - 1}
+                className="px-3 py-1 text-xs rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 disabled:opacity-30 transition"
+              >Próxima ›</button>
+              <button
+                onClick={() => setPage(totalPages - 1)}
+                disabled={page === totalPages - 1}
+                className="px-2 py-1 text-xs rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 disabled:opacity-30 transition"
+              >»</button>
+            </div>
           </div>
         )}
       </div>

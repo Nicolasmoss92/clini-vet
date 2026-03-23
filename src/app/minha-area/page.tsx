@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { animaisApi, vacinasApi, Animal, Vacina } from '@/lib/api';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import { calcularIdade } from '@/lib/dateUtils';
 
 interface EditFields {
   dataNascimento: string;
@@ -77,13 +79,7 @@ export default function MinhAreaPage() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-4 border-green-600 border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-  }
+  if (loading) return <LoadingSpinner />;
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -245,18 +241,6 @@ export default function MinhAreaPage() {
   );
 }
 
-function calcularIdade(dataNascimento: string): string {
-  const nasc = new Date(dataNascimento);
-  const hoje = new Date();
-  const anos = hoje.getFullYear() - nasc.getFullYear();
-  const meses = hoje.getMonth() - nasc.getMonth();
-  const totalMeses = anos * 12 + meses - (hoje.getDate() < nasc.getDate() ? 1 : 0);
-  if (totalMeses < 1) return 'menos de 1 mês';
-  if (totalMeses < 12) return `${totalMeses} ${totalMeses === 1 ? 'mês' : 'meses'}`;
-  const a = Math.floor(totalMeses / 12);
-  const m = totalMeses % 12;
-  return m === 0 ? `${a} ${a === 1 ? 'ano' : 'anos'}` : `${a} ${a === 1 ? 'ano' : 'anos'} e ${m} ${m === 1 ? 'mês' : 'meses'}`;
-}
 
 function InfoRow({ label, value }: { label: string; value: string | null }) {
   return (
