@@ -1,11 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { agendamentosApi, Agendamento } from '@/lib/api';
+import { useState } from 'react';
+
 import Link from 'next/link';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import StatusBadge from '@/components/ui/StatusBadge';
 import { TIPO_LABEL, STATUS_LABEL, STATUS_COLOR, STATUS_DOT } from '@/lib/constants';
+import { useAgendamentos } from '@/hooks/useAgendamentos';
 
 const DIAS_SEMANA = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
 
@@ -23,17 +24,9 @@ function toISO(date: Date): string {
 }
 
 export function AgendaView() {
-  const [todos, setTodos] = useState<Agendamento[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { agendamentos: todos, loading } = useAgendamentos();
   const [weekStart, setWeekStart] = useState<Date>(() => getMondayOf(new Date()));
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
-
-  useEffect(() => {
-    agendamentosApi.list()
-      .then(setTodos)
-      .catch(console.error)
-      .finally(() => setLoading(false));
-  }, []);
 
   const weekDays = Array.from({ length: 7 }, (_, i) => {
     const d = new Date(weekStart);

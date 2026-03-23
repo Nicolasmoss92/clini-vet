@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { agendamentosApi, Agendamento } from '@/lib/api';
+import { useMemo } from 'react';
+import { useAgendamentos } from '@/hooks/useAgendamentos';
 import Link from 'next/link';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import StatusBadge from '@/components/ui/StatusBadge';
@@ -9,23 +9,13 @@ import { TIPO_LABEL } from '@/lib/constants';
 import { Charts } from '@/components/features/dashboard/Charts';
 
 export function DashboardView() {
-  const [totais, setTotais] = useState({ agendamentos: 0, aguardando: 0, cancelados: 0 });
-  const [todos, setTodos] = useState<Agendamento[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { agendamentos: todos, loading } = useAgendamentos();
 
-  useEffect(() => {
-    agendamentosApi.list()
-      .then((agendamentos) => {
-        setTodos(agendamentos);
-        setTotais({
-          agendamentos: agendamentos.filter((a) => a.status === 'AGENDADO' || a.status === 'CONFIRMADO').length,
-          aguardando: agendamentos.filter((a) => a.status === 'AGENDADO').length,
-          cancelados: agendamentos.filter((a) => a.status === 'CANCELADO').length,
-        });
-      })
-      .catch(console.error)
-      .finally(() => setLoading(false));
-  }, []);
+  const totais = useMemo(() => ({
+    agendamentos: todos.filter((a) => a.status === 'AGENDADO' || a.status === 'CONFIRMADO').length,
+    aguardando: todos.filter((a) => a.status === 'AGENDADO').length,
+    cancelados: todos.filter((a) => a.status === 'CANCELADO').length,
+  }), [todos]);
 
   if (loading) {
     return <LoadingSpinner />;

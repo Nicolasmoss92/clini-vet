@@ -1,11 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { agendamentosApi, animaisApi, Agendamento, Animal, StatusAgendamento } from '@/lib/api';
+import { useState } from 'react';
+import { agendamentosApi, StatusAgendamento } from '@/lib/api';
+import { useAgendamentos } from '@/hooks/useAgendamentos';
+import { useAnimais } from '@/hooks/useAnimais';
+import { usePaginatedList } from '@/hooks/usePaginatedList';
 import { AgendamentoForm } from '@/components/AgendamentoForm';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import StatusBadge from '@/components/ui/StatusBadge';
-import Pagination from '@/components/ui/Pagination';
+
 import {
   TIPO_LABEL,
   STATUS_LABEL,
@@ -17,22 +20,15 @@ import {
 import { ConcluirAtendimentoModal } from '@/components/features/agendamentos/ConcluirAtendimentoModal';
 
 export function AdminAgendamentosView() {
-  const [agendamentos, setAgendamentos] = useState<Agendamento[]>([]);
-  const [animais, setAnimais] = useState<Animal[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { agendamentos, setAgendamentos, loading: agLoading } = useAgendamentos();
+  const { animais, loading: aniLoading } = useAnimais();
+  const loading = agLoading || aniLoading;
   const [updating, setUpdating] = useState<string | null>(null);
   const [filtro, setFiltro] = useState<string>('TODOS');
   const [busca, setBusca] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [concluirId, setConcluirId] = useState<string | null>(null);
-  const [page, setPage] = useState(0);
   const PAGE_SIZE = 15;
-
-  useEffect(() => {
-    Promise.all([agendamentosApi.list(), animaisApi.list()])
-      .then(([ags, pets]) => { setAgendamentos(ags); setAnimais(pets); })
-      .finally(() => setLoading(false));
-  }, []);
 
   const handleStatus = async (id: string, status: StatusAgendamento) => {
     if (status === 'CONCLUIDO') {
@@ -57,8 +53,7 @@ export function AdminAgendamentosView() {
     .filter((a) => !busca || a.animal.nome.toLowerCase().includes(busca.toLowerCase()) || a.tutor?.nome?.toLowerCase().includes(busca.toLowerCase()))
     .sort((a, b) => b.data.localeCompare(a.data) || b.horaInicio.localeCompare(a.horaInicio));
 
-  const totalPages = Math.ceil(lista.length / PAGE_SIZE);
-  const paginated = lista.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
+  const { page, setPage, paginated, totalPages, pageStart, pageEnd } = usePaginatedList(lista, PAGE_SIZE);
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -191,7 +186,7 @@ export function AdminAgendamentosView() {
         {totalPages > 1 && (
           <div className="flex items-center justify-between px-4 py-3 border-t border-gray-100">
             <p className="text-xs text-gray-400">
-              {page * PAGE_SIZE + 1}–{Math.min((page + 1) * PAGE_SIZE, lista.length)} de {lista.length} agendamentos
+              {pageStart}–{pageEnd} de {lista.length} agendamentos
             </p>
             <div className="flex items-center gap-1">
               <button

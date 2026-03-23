@@ -1,7 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { agendamentosApi, animaisApi, Agendamento, Animal, CreateAgendamentoData, TipoAgendamento } from '@/lib/api';
+import { agendamentosApi, Agendamento, CreateAgendamentoData, TipoAgendamento } from '@/lib/api';
+import { useAgendamentos } from '@/hooks/useAgendamentos';
+import { useAnimais } from '@/hooks/useAnimais';
 import { CalendarPicker } from '@/components/ui/CalendarPicker';
 import { TimeSlotPicker } from '@/components/ui/TimeSlotPicker';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
@@ -21,9 +23,9 @@ interface FormState {
 }
 
 export function ClienteAgendamentosView() {
-  const [agendamentos, setAgendamentos] = useState<Agendamento[]>([]);
-  const [animais, setAnimais] = useState<Animal[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { agendamentos, setAgendamentos, loading: agLoading } = useAgendamentos();
+  const { animais, loading: aniLoading } = useAnimais();
+  const loading = agLoading || aniLoading;
   const [showForm, setShowForm] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -39,14 +41,8 @@ export function ClienteAgendamentosView() {
   const isPetSister = form.tipo === 'PETSITTER';
 
   useEffect(() => {
-    Promise.all([agendamentosApi.list(), animaisApi.list()])
-      .then(([a, pets]) => {
-        setAgendamentos(a);
-        setAnimais(pets);
-        if (pets.length > 0) setForm((f) => ({ ...f, animalId: f.animalId || pets[0].id }));
-      })
-      .finally(() => setLoading(false));
-  }, []);
+    if (animais.length > 0) setForm((f) => ({ ...f, animalId: f.animalId || animais[0].id }));
+  }, [animais]);
 
   const occupiedDates = agendamentos
     .filter((a) => a.status !== 'CANCELADO')
