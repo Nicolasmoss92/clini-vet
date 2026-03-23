@@ -50,6 +50,7 @@ export default function VisaoGeralPage() {
   const [vacinas, setVacinas] = useState<VacinaComAnimal[]>([]);
   const [loading, setLoading] = useState(true);
   const [agIdx, setAgIdx] = useState(0);
+  const [aniIdx, setAniIdx] = useState(0);
 
   useEffect(() => {
     Promise.all([animaisApi.list(), agendamentosApi.list()])
@@ -96,7 +97,6 @@ export default function VisaoGeralPage() {
     .sort((a, b) => a.dias - b.dias);
 
   const aniversariosProximos = aniversarios.filter((a) => a.dias <= 30);
-  const proximoAniversario = aniversarios[0] ?? null;
 
   // Vacinas: vencidas, a vencer em 30 dias, em dia
   const vacinasComStatus = vacinas
@@ -120,9 +120,9 @@ export default function VisaoGeralPage() {
       </div>
 
       {/* Cards de status rápido */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         {/* Próximo agendamento */}
-        <div className="bg-white rounded-xl border border-t-4 border-t-green-600 border-gray-100 shadow-md p-5">
+        <div className="bg-white rounded-xl border border-t-4 border-t-green-600 border-gray-100 shadow-md p-5 min-h-[160px] flex flex-col">
           <div className="flex items-center justify-between mb-2">
             <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Próximo agendamento</p>
             {proximosAgs.length > 1 && (
@@ -142,7 +142,7 @@ export default function VisaoGeralPage() {
             )}
           </div>
           {proximoAg ? (
-            <Link href="/minha-area/agendamentos">
+            <Link href="/minha-area/agendamentos" className="flex-1">
               <p className="font-bold text-gray-800 text-sm">{proximoAg.animal.nome}</p>
               <p className="text-green-600 font-semibold text-sm mt-0.5">{tipoLabel[proximoAg.tipo]}</p>
               <p className="text-xs text-gray-500 mt-1">
@@ -158,8 +158,8 @@ export default function VisaoGeralPage() {
         </div>
 
         {/* Pendentes */}
-        <Link href="/minha-area/agendamentos">
-          <div className="bg-white rounded-xl border border-t-4 border-t-yellow-400 border-gray-100 shadow-md p-5 hover:shadow-lg transition-all hover:-translate-y-0.5 duration-200">
+        <Link href="/minha-area/agendamentos" className="min-h-[160px]">
+          <div className="bg-white rounded-xl border border-t-4 border-t-yellow-400 border-gray-100 shadow-md p-5 h-full flex flex-col hover:shadow-lg transition-all hover:-translate-y-0.5 duration-200">
             <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Aguardando aprovação</p>
             <p className="text-3xl font-bold text-yellow-500">{pendentes.length}</p>
             <p className="text-xs text-gray-400 mt-1">
@@ -170,52 +170,51 @@ export default function VisaoGeralPage() {
           </div>
         </Link>
 
-        {/* Aniversários */}
-        <Link href="/minha-area">
-          <div className={`bg-white rounded-xl border border-t-4 border-gray-100 shadow-md p-5 hover:shadow-lg transition-all hover:-translate-y-0.5 duration-200 ${
-            proximoAniversario?.dias === 0 ? 'border-t-yellow-400' : 'border-t-pink-400'
-          }`}>
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Aniversário</p>
-            {proximoAniversario ? (
-              <>
-                <p className="font-bold text-gray-800 text-sm">{proximoAniversario.nome}</p>
-                <p className={`text-sm font-semibold mt-0.5 ${proximoAniversario.dias === 0 ? 'text-yellow-500' : 'text-pink-500'}`}>
-                  {proximoAniversario.dias === 0 ? '🎂 Hoje!' : proximoAniversario.dias === 1 ? '🎉 Amanhã!' : `em ${proximoAniversario.dias} dias`}
+        {/* Aniversário */}
+        <div className={`bg-white rounded-xl border border-t-4 border-gray-100 shadow-md p-5 min-h-[160px] flex flex-col ${
+          aniversarios[aniIdx]?.dias === 0 ? 'border-t-yellow-400' : 'border-t-pink-400'
+        }`}>
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Aniversário</p>
+            {aniversarios.length > 1 && (
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={() => setAniIdx((i) => Math.max(0, i - 1))}
+                  disabled={aniIdx === 0}
+                  className="w-6 h-6 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 hover:border-pink-400 hover:text-pink-500 disabled:opacity-30 transition text-sm"
+                >‹</button>
+                <span className="text-xs text-gray-400">{aniIdx + 1}/{aniversarios.length}</span>
+                <button
+                  onClick={() => setAniIdx((i) => Math.min(aniversarios.length - 1, i + 1))}
+                  disabled={aniIdx === aniversarios.length - 1}
+                  className="w-6 h-6 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 hover:border-pink-400 hover:text-pink-500 disabled:opacity-30 transition text-sm"
+                >›</button>
+              </div>
+            )}
+          </div>
+          {aniversarios[aniIdx] ? (
+            <Link href="/minha-area" className="flex-1 flex items-start gap-3">
+              <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-pink-200 bg-pink-50 flex-shrink-0">
+                {aniversarios[aniIdx].foto ? (
+                  <img src={aniversarios[aniIdx].foto!} alt={aniversarios[aniIdx].nome} className="w-full h-full object-cover" />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-xl">🐾</div>
+                )}
+              </div>
+              <div>
+                <p className="font-bold text-gray-800 text-sm">{aniversarios[aniIdx].nome}</p>
+                <p className={`text-sm font-semibold mt-0.5 ${aniversarios[aniIdx].dias === 0 ? 'text-yellow-500' : 'text-pink-500'}`}>
+                  {aniversarios[aniIdx].dias === 0 ? '🎂 Hoje!' : aniversarios[aniIdx].dias === 1 ? '🎉 Amanhã!' : `em ${aniversarios[aniIdx].dias} dias`}
                 </p>
                 <p className="text-xs text-gray-400 mt-1">
-                  {new Date(proximoAniversario.dataNascimento!).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long' })}
+                  {new Date(aniversarios[aniIdx].dataNascimento!).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long' })}
                 </p>
-              </>
-            ) : (
-              <p className="text-sm text-gray-400 italic mt-1">Sem data de nascimento</p>
-            )}
-          </div>
-        </Link>
-
-        {/* Vacinas */}
-        <Link href="/minha-area">
-          <div className={`bg-white rounded-xl border border-t-4 border-gray-100 shadow-md p-5 hover:shadow-lg transition-all hover:-translate-y-0.5 duration-200 ${
-            vacinasVencidas.length > 0 ? 'border-t-red-500' : vacinasUrgentes.length > 0 ? 'border-t-orange-400' : 'border-t-green-600'
-          }`}>
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Vacinas</p>
-            {vacinasVencidas.length > 0 ? (
-              <>
-                <p className="text-3xl font-bold text-red-500">{vacinasVencidas.length}</p>
-                <p className="text-xs text-red-400 mt-1">vacina{vacinasVencidas.length > 1 ? 's' : ''} vencida{vacinasVencidas.length > 1 ? 's' : ''}</p>
-              </>
-            ) : vacinasUrgentes.length > 0 ? (
-              <>
-                <p className="text-3xl font-bold text-orange-500">{vacinasUrgentes.length}</p>
-                <p className="text-xs text-orange-400 mt-1">vence{vacinasUrgentes.length > 1 ? 'm' : ''} em breve</p>
-              </>
-            ) : (
-              <>
-                <p className="text-3xl font-bold text-green-600">{vacinasOk.length + semProxDose.length}</p>
-                <p className="text-xs text-green-500 mt-1">todas em dia</p>
-              </>
-            )}
-          </div>
-        </Link>
+              </div>
+            </Link>
+          ) : (
+            <p className="text-sm text-gray-400 italic mt-1">Sem data de nascimento</p>
+          )}
+        </div>
       </div>
 
       {/* Aniversários próximos */}

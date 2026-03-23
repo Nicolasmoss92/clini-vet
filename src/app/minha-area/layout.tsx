@@ -9,6 +9,8 @@ const navItems = [
   { label: 'Visão Geral', href: '/minha-area/visao-geral' },
   { label: 'Meus Pets', href: '/minha-area' },
   { label: 'Agendamentos', href: '/minha-area/agendamentos' },
+  { label: 'Vacinas', href: '/minha-area/vacinas' },
+  { label: 'Histórico Financeiro', href: '/minha-area/historico-financeiro' },
 ];
 
 export default function MinhaAreaLayout({ children }: { children: React.ReactNode }) {
