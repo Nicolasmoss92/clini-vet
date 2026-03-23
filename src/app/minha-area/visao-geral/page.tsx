@@ -49,6 +49,7 @@ export default function VisaoGeralPage() {
   const [agendamentos, setAgendamentos] = useState<Agendamento[]>([]);
   const [vacinas, setVacinas] = useState<VacinaComAnimal[]>([]);
   const [loading, setLoading] = useState(true);
+  const [agIdx, setAgIdx] = useState(0);
 
   useEffect(() => {
     Promise.all([animaisApi.list(), agendamentosApi.list()])
@@ -79,10 +80,11 @@ export default function VisaoGeralPage() {
   hoje.setHours(0, 0, 0, 0);
   const hojeISO = hoje.toISOString().split('T')[0];
 
-  // Próximo agendamento ativo
-  const proximoAg = agendamentos
+  // Próximos agendamentos ativos (todos, para carrossel)
+  const proximosAgs = agendamentos
     .filter((a) => a.data.split('T')[0] >= hojeISO && (a.status === 'AGENDADO' || a.status === 'CONFIRMADO'))
-    .sort((a, b) => a.data.localeCompare(b.data) || a.horaInicio.localeCompare(b.horaInicio))[0] ?? null;
+    .sort((a, b) => a.data.localeCompare(b.data) || a.horaInicio.localeCompare(b.horaInicio));
+  const proximoAg = proximosAgs[agIdx] ?? null;
 
   // Pendentes (aguardando aprovação)
   const pendentes = agendamentos.filter((a) => a.status === 'AGENDADO');
@@ -118,25 +120,40 @@ export default function VisaoGeralPage() {
       {/* Cards de status rápido */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         {/* Próximo agendamento */}
-        <Link href="/minha-area/agendamentos">
-          <div className="bg-white rounded-xl border border-t-4 border-t-green-600 border-gray-100 shadow-md p-5 hover:shadow-lg transition-all hover:-translate-y-0.5 duration-200">
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Próximo agendamento</p>
-            {proximoAg ? (
-              <>
-                <p className="font-bold text-gray-800 text-sm">{proximoAg.animal.nome}</p>
-                <p className="text-green-600 font-semibold text-sm mt-0.5">{tipoLabel[proximoAg.tipo]}</p>
-                <p className="text-xs text-gray-500 mt-1">
-                  {new Date(proximoAg.data).toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short' })} · {proximoAg.horaInicio}
-                </p>
-                <span className={`mt-2 inline-block px-2 py-0.5 rounded-full text-xs font-medium ${statusColor[proximoAg.status]}`}>
-                  {proximoAg.status === 'CONFIRMADO' ? 'Confirmado' : 'Aguardando'}
-                </span>
-              </>
-            ) : (
-              <p className="text-sm text-gray-400 italic mt-1">Nenhum agendamento futuro</p>
+        <div className="bg-white rounded-xl border border-t-4 border-t-green-600 border-gray-100 shadow-md p-5">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Próximo agendamento</p>
+            {proximosAgs.length > 1 && (
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={() => setAgIdx((i) => Math.max(0, i - 1))}
+                  disabled={agIdx === 0}
+                  className="w-6 h-6 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 hover:border-green-400 hover:text-green-600 disabled:opacity-30 transition text-sm"
+                >‹</button>
+                <span className="text-xs text-gray-400">{agIdx + 1}/{proximosAgs.length}</span>
+                <button
+                  onClick={() => setAgIdx((i) => Math.min(proximosAgs.length - 1, i + 1))}
+                  disabled={agIdx === proximosAgs.length - 1}
+                  className="w-6 h-6 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 hover:border-green-400 hover:text-green-600 disabled:opacity-30 transition text-sm"
+                >›</button>
+              </div>
             )}
           </div>
-        </Link>
+          {proximoAg ? (
+            <Link href="/minha-area/agendamentos">
+              <p className="font-bold text-gray-800 text-sm">{proximoAg.animal.nome}</p>
+              <p className="text-green-600 font-semibold text-sm mt-0.5">{tipoLabel[proximoAg.tipo]}</p>
+              <p className="text-xs text-gray-500 mt-1">
+                {new Date(proximoAg.data).toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short' })} · {proximoAg.horaInicio}
+              </p>
+              <span className={`mt-2 inline-block px-2 py-0.5 rounded-full text-xs font-medium ${statusColor[proximoAg.status]}`}>
+                {proximoAg.status === 'CONFIRMADO' ? 'Confirmado' : 'Aguardando'}
+              </span>
+            </Link>
+          ) : (
+            <p className="text-sm text-gray-400 italic mt-1">Nenhum agendamento futuro</p>
+          )}
+        </div>
 
         {/* Pendentes */}
         <Link href="/minha-area/agendamentos">
