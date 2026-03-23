@@ -7,6 +7,7 @@ import Link from 'next/link';
 
 const navItems = [
   { label: 'Visão Geral', href: '/dashboard' },
+  { label: 'Agenda', href: '/dashboard/agenda' },
   { label: 'Agendamentos', href: '/dashboard/agendamentos' },
   { label: 'Animais', href: '/dashboard/animais' },
   { label: 'Tutores', href: '/dashboard/tutores' },
@@ -37,7 +38,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* Topbar */}
       <header className="bg-green-600 h-16 flex items-center justify-between px-6 shadow-md">
         <div className="flex items-center gap-4">
-          <img src="/logo.png" alt="CliniVet" className="h-10 object-contain brightness-0 invert" />
+          <img src="/logo.png" alt="CliniVet" className="h-10 object-contain" />
           <span className="text-white font-semibold text-sm hidden sm:block">Painel Veterinário</span>
         </div>
         <div className="flex items-center gap-3">

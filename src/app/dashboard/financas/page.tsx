@@ -3,12 +3,8 @@
 import { useEffect, useState } from 'react';
 import { agendamentosApi, Agendamento } from '@/lib/api';
 import Link from 'next/link';
-
-const tipoLabel: Record<string, string> = {
-  CONSULTA: 'Consulta',
-  BANHO_TOSA: 'Banho e Tosa',
-  PETSITTER: 'Pet Sister',
-};
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import { TIPO_LABEL } from '@/lib/constants';
 
 const SERVICOS = [
   { tipo: 'CONSULTA',   label: 'Consulta',     stroke: '#16a34a', light: 'bg-green-100',  text: 'text-green-700',  bar: 'bg-green-500'  },
@@ -76,13 +72,7 @@ export default function FinancasPage() {
     agendamentosApi.list().then(setTodos).finally(() => setLoading(false));
   }, []);
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-4 border-green-600 border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-  }
+  if (loading) return <LoadingSpinner />;
 
   const now = new Date();
   const mesAtual = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
@@ -285,7 +275,7 @@ export default function FinancasPage() {
                         {new Date(a.data).toLocaleDateString('pt-BR')}
                       </td>
                       <td className="px-4 py-3 font-medium text-gray-700">{a.animal.nome}</td>
-                      <td className="px-4 py-3 text-gray-600">{tipoLabel[a.tipo]}</td>
+                      <td className="px-4 py-3 text-gray-600">{TIPO_LABEL[a.tipo]}</td>
                       <td className="px-4 py-3 text-gray-500 max-w-[200px]">
                         {a.descricaoConsulta ? (
                           <span className="text-xs italic">{a.descricaoConsulta}</span>

@@ -4,39 +4,9 @@ import { useEffect, useState } from 'react';
 import { animaisApi, agendamentosApi, vacinasApi, Animal, Agendamento, Vacina } from '@/lib/api';
 import { useAuth } from '@/contexts/AuthContext';
 import Link from 'next/link';
-
-const tipoLabel: Record<string, string> = {
-  CONSULTA: 'Consulta',
-  BANHO_TOSA: 'Banho e Tosa',
-  PETSITTER: 'Pet Sister',
-};
-
-const statusColor: Record<string, string> = {
-  AGENDADO: 'bg-yellow-100 text-yellow-700',
-  CONFIRMADO: 'bg-blue-100 text-blue-700',
-};
-
-function diasAteAniversario(dataNascimento: string): number {
-  const hoje = new Date();
-  const nasc = new Date(dataNascimento);
-  const proximo = new Date(hoje.getFullYear(), nasc.getMonth(), nasc.getDate());
-  if (proximo < hoje) proximo.setFullYear(hoje.getFullYear() + 1);
-  return Math.round((proximo.getTime() - hoje.setHours(0, 0, 0, 0)) / 86400000);
-}
-
-function idadeAnos(dataNascimento: string): number {
-  const hoje = new Date();
-  const nasc = new Date(dataNascimento);
-  let anos = hoje.getFullYear() - nasc.getFullYear();
-  if (hoje.getMonth() < nasc.getMonth() || (hoje.getMonth() === nasc.getMonth() && hoje.getDate() < nasc.getDate())) anos--;
-  return anos;
-}
-
-function diasParaVencer(data: string): number {
-  const hoje = new Date();
-  hoje.setHours(0, 0, 0, 0);
-  return Math.round((new Date(data).getTime() - hoje.getTime()) / 86400000);
-}
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import { TIPO_LABEL, STATUS_COLOR } from '@/lib/constants';
+import { diasAteAniversario, idadeAnos, diasParaVencer } from '@/lib/dateUtils';
 
 interface VacinaComAnimal extends Vacina {
   animalNome: string;
@@ -69,13 +39,7 @@ export default function VisaoGeralPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-4 border-green-600 border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-  }
+  if (loading) return <LoadingSpinner />;
 
   const hoje = new Date();
   hoje.setHours(0, 0, 0, 0);
@@ -144,11 +108,11 @@ export default function VisaoGeralPage() {
           {proximoAg ? (
             <Link href="/minha-area/agendamentos" className="flex-1">
               <p className="font-bold text-gray-800 text-sm">{proximoAg.animal.nome}</p>
-              <p className="text-green-600 font-semibold text-sm mt-0.5">{tipoLabel[proximoAg.tipo]}</p>
+              <p className="text-green-600 font-semibold text-sm mt-0.5">{TIPO_LABEL[proximoAg.tipo]}</p>
               <p className="text-xs text-gray-500 mt-1">
                 {new Date(proximoAg.data).toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short' })} · {proximoAg.horaInicio}
               </p>
-              <span className={`mt-2 inline-block px-2 py-0.5 rounded-full text-xs font-medium ${statusColor[proximoAg.status]}`}>
+              <span className={`mt-2 inline-block px-2 py-0.5 rounded-full text-xs font-medium ${STATUS_COLOR[proximoAg.status]}`}>
                 {proximoAg.status === 'CONFIRMADO' ? 'Confirmado' : 'Aguardando'}
               </span>
             </Link>
@@ -329,11 +293,11 @@ export default function VisaoGeralPage() {
                     <div>
                       <p className="text-sm font-semibold text-gray-700">{a.animal.nome}</p>
                       <p className="text-xs text-gray-500">
-                        {tipoLabel[a.tipo]} · {new Date(a.data).toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short' })} · {a.horaInicio}
+                        {TIPO_LABEL[a.tipo]} · {new Date(a.data).toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short' })} · {a.horaInicio}
                       </p>
                     </div>
                   </div>
-                  <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${statusColor[a.status]}`}>
+                  <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${STATUS_COLOR[a.status]}`}>
                     {a.status === 'CONFIRMADO' ? 'Confirmado' : 'Pendente'}
                   </span>
                 </div>
