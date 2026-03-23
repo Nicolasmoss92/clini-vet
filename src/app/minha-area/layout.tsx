@@ -6,6 +6,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import Link from 'next/link';
 
 const navItems = [
+  { label: 'Visão Geral', href: '/minha-area/visao-geral' },
   { label: 'Meus Pets', href: '/minha-area' },
   { label: 'Agendamentos', href: '/minha-area/agendamentos' },
 ];
