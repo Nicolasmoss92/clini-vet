@@ -1,10 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { agendamentosApi, StatusAgendamento } from '@/lib/api';
+import { StatusAgendamento } from '@/lib/api';
 import { useAgendamentos } from '@/hooks/useAgendamentos';
 import { useAnimais } from '@/hooks/useAnimais';
 import { usePaginatedList } from '@/hooks/usePaginatedList';
+import { useAgendamentoStatus } from '@/hooks/useAgendamentoStatus';
 import { AgendamentoForm } from '@/components/AgendamentoForm';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import StatusBadge from '@/components/ui/StatusBadge';
@@ -23,26 +24,11 @@ export function AdminAgendamentosView() {
   const { agendamentos, setAgendamentos, loading: agLoading } = useAgendamentos();
   const { animais, loading: aniLoading } = useAnimais();
   const loading = agLoading || aniLoading;
-  const [updating, setUpdating] = useState<string | null>(null);
+  const { updating, concluirId, setConcluirId, handleStatus } = useAgendamentoStatus({ setAgendamentos });
   const [filtro, setFiltro] = useState<string>('TODOS');
   const [busca, setBusca] = useState('');
   const [showForm, setShowForm] = useState(false);
-  const [concluirId, setConcluirId] = useState<string | null>(null);
   const PAGE_SIZE = 15;
-
-  const handleStatus = async (id: string, status: StatusAgendamento) => {
-    if (status === 'CONCLUIDO') {
-      setConcluirId(id);
-      return;
-    }
-    setUpdating(id);
-    try {
-      const updated = await agendamentosApi.updateStatus(id, status);
-      setAgendamentos((prev) => prev.map((a) => (a.id === id ? { ...a, ...updated } : a)));
-    } finally {
-      setUpdating(null);
-    }
-  };
 
   if (loading) {
     return <LoadingSpinner />;
