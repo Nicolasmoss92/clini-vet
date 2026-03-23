@@ -89,12 +89,14 @@ export default function VisaoGeralPage() {
   // Pendentes (aguardando aprovação)
   const pendentes = agendamentos.filter((a) => a.status === 'AGENDADO');
 
-  // Aniversários nos próximos 30 dias
+  // Aniversários — todos ordenados pelo mais próximo
   const aniversarios = animais
     .filter((a) => a.dataNascimento)
     .map((a) => ({ ...a, dias: diasAteAniversario(a.dataNascimento!) }))
-    .filter((a) => a.dias <= 30)
     .sort((a, b) => a.dias - b.dias);
+
+  const aniversariosProximos = aniversarios.filter((a) => a.dias <= 30);
+  const proximoAniversario = aniversarios[0] ?? null;
 
   // Vacinas: vencidas, a vencer em 30 dias, em dia
   const vacinasComStatus = vacinas
@@ -118,7 +120,7 @@ export default function VisaoGeralPage() {
       </div>
 
       {/* Cards de status rápido */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {/* Próximo agendamento */}
         <div className="bg-white rounded-xl border border-t-4 border-t-green-600 border-gray-100 shadow-md p-5">
           <div className="flex items-center justify-between mb-2">
@@ -168,6 +170,28 @@ export default function VisaoGeralPage() {
           </div>
         </Link>
 
+        {/* Aniversários */}
+        <Link href="/minha-area">
+          <div className={`bg-white rounded-xl border border-t-4 border-gray-100 shadow-md p-5 hover:shadow-lg transition-all hover:-translate-y-0.5 duration-200 ${
+            proximoAniversario?.dias === 0 ? 'border-t-yellow-400' : 'border-t-pink-400'
+          }`}>
+            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Aniversário</p>
+            {proximoAniversario ? (
+              <>
+                <p className="font-bold text-gray-800 text-sm">{proximoAniversario.nome}</p>
+                <p className={`text-sm font-semibold mt-0.5 ${proximoAniversario.dias === 0 ? 'text-yellow-500' : 'text-pink-500'}`}>
+                  {proximoAniversario.dias === 0 ? '🎂 Hoje!' : proximoAniversario.dias === 1 ? '🎉 Amanhã!' : `em ${proximoAniversario.dias} dias`}
+                </p>
+                <p className="text-xs text-gray-400 mt-1">
+                  {new Date(proximoAniversario.dataNascimento!).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long' })}
+                </p>
+              </>
+            ) : (
+              <p className="text-sm text-gray-400 italic mt-1">Sem data de nascimento</p>
+            )}
+          </div>
+        </Link>
+
         {/* Vacinas */}
         <Link href="/minha-area">
           <div className={`bg-white rounded-xl border border-t-4 border-gray-100 shadow-md p-5 hover:shadow-lg transition-all hover:-translate-y-0.5 duration-200 ${
@@ -194,12 +218,12 @@ export default function VisaoGeralPage() {
         </Link>
       </div>
 
-      {/* Aniversários */}
-      {aniversarios.length > 0 && (
+      {/* Aniversários próximos */}
+      {aniversariosProximos.length > 0 && (
         <div className="bg-white rounded-xl border border-gray-100 shadow-md p-6 mb-6">
           <h2 className="text-base font-semibold text-gray-700 mb-4">🎂 Aniversários</h2>
           <div className="flex flex-col gap-3">
-            {aniversarios.map((a) => {
+            {aniversariosProximos.map((a) => {
               const anos = idadeAnos(a.dataNascimento!);
               const isHoje = a.dias === 0;
               return (
