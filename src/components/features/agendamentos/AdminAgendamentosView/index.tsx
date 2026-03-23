@@ -30,16 +30,16 @@ export function AdminAgendamentosView() {
   const [showForm, setShowForm] = useState(false);
   const PAGE_SIZE = 15;
 
-  if (loading) {
-    return <LoadingSpinner />;
-  }
-
   const lista = agendamentos
     .filter((a) => filtro === 'TODOS' || a.status === filtro)
     .filter((a) => !busca || a.animal.nome.toLowerCase().includes(busca.toLowerCase()) || a.tutor?.nome?.toLowerCase().includes(busca.toLowerCase()))
     .sort((a, b) => b.data.localeCompare(a.data) || b.horaInicio.localeCompare(a.horaInicio));
 
   const { page, setPage, paginated, totalPages, pageStart, pageEnd } = usePaginatedList(lista, PAGE_SIZE);
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className="max-w-6xl mx-auto">
