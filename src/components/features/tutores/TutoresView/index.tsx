@@ -3,15 +3,16 @@
 import { useEffect, useState } from 'react';
 import { usersApi, User } from '@/lib/api';
 import { maskTelefone } from '@/lib/masks';
+import { useToast } from '@/contexts/ToastContext';
 
 export function TutoresView() {
+  const { showToast } = useToast();
   const [tutores, setTutores] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ nome: '', telefone: '' });
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
 
   useEffect(() => {
     usersApi.list()
@@ -21,13 +22,13 @@ export function TutoresView() {
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSaving(true); setError(''); setSuccess('');
+    setSaving(true); setError('');
     try {
       const novo = await usersApi.create(form);
       setTutores((prev) => [...prev, novo]);
       setShowForm(false);
       setForm({ nome: '', telefone: '' });
-      setSuccess('Tutor pré-cadastrado! Ele deve acessar /login para ativar a conta.');
+      showToast('Tutor pré-cadastrado! Ele deve acessar /login para ativar a conta.');
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Erro ao cadastrar tutor.');
     } finally {
@@ -48,16 +49,12 @@ export function TutoresView() {
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-green-600">Tutores</h1>
         <button
-          onClick={() => { setShowForm(!showForm); setError(''); setSuccess(''); }}
+          onClick={() => { setShowForm(!showForm); setError(''); }}
           className="bg-green-600 text-white text-sm font-medium px-4 py-2 rounded-lg border border-green-600 hover:bg-white hover:text-green-600 transition duration-300"
         >
           {showForm ? 'Cancelar' : '+ Novo Tutor'}
         </button>
       </div>
-
-      {success && (
-        <div className="mb-4 p-3 bg-green-50 border border-green-300 text-green-700 rounded-lg text-sm">{success}</div>
-      )}
 
       {showForm && (
         <form onSubmit={handleCreate} className="bg-white rounded-xl border border-gray-100 shadow-md p-6 mb-6">

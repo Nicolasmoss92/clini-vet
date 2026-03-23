@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { animaisApi, usersApi, vacinasApi, Animal, User, Vacina, CreateAnimalData, CreateVacinaData } from '@/lib/api';
+import { useToast } from '@/contexts/ToastContext';
 
 interface EditAnimalFields {
   nome: string;
@@ -31,6 +32,7 @@ function DetailRow({ label, value }: { label: string; value: string | null }) {
 }
 
 export function AnimaisView() {
+  const { showToast } = useToast();
   const [animais, setAnimais] = useState<Animal[]>([]);
   const [tutores, setTutores] = useState<User[]>([]);
   const [vacinas, setVacinas] = useState<Record<string, Vacina[]>>({});
@@ -45,7 +47,6 @@ export function AnimaisView() {
   const [showVacinaFormFor, setShowVacinaFormFor] = useState<string | null>(null);
   const [editVacinaForm, setEditVacinaForm] = useState<EditVacinaFields>({ nome: '', dataAplicacao: '', proximaDose: '', observacoes: '' });
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState('');
 
   useEffect(() => {
     Promise.all([animaisApi.list(), usersApi.list()])
@@ -82,14 +83,14 @@ export function AnimaisView() {
 
   const handleCreateAnimal = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSaving(true); setError('');
+    setSaving(true);
     try {
       const novo = await animaisApi.create(form);
       setAnimais((prev) => [...prev, novo]);
       setShowForm(false);
       setForm({ nome: '', especie: '', raca: '', tutorId: '' });
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Erro ao cadastrar animal.');
+      showToast(err instanceof Error ? err.message : 'Erro ao cadastrar animal.', 'error');
     } finally {
       setSaving(false);
     }
@@ -114,13 +115,13 @@ export function AnimaisView() {
 
   const handleCreateVacina = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSaving(true); setError('');
+    setSaving(true);
     try {
       const nova = await vacinasApi.create(vacinaForm);
       setVacinas((prev) => ({ ...prev, [vacinaForm.animalId]: [...(prev[vacinaForm.animalId] ?? []), nova] }));
       setVacinaForm((f) => ({ ...f, nome: '', dataAplicacao: '', proximaDose: '', observacoes: '' }));
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Erro ao registrar vacina.');
+      showToast(err instanceof Error ? err.message : 'Erro ao registrar vacina.', 'error');
     } finally {
       setSaving(false);
     }
@@ -198,7 +199,6 @@ export function AnimaisView() {
       {showForm && (
         <form onSubmit={handleCreateAnimal} className="bg-white rounded-xl border border-gray-100 shadow-md p-6 mb-6">
           <h2 className="text-lg font-semibold text-gray-700 mb-4">Cadastrar Animal</h2>
-          {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Nome *</label>
