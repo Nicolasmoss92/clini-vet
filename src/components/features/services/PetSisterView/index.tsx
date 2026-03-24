@@ -1,38 +1,35 @@
-import Footer from '@/components/footer';
-import Header from '@/components/header';
-import { NavLink } from '@/components/header/NavLink';
-import SubHeader from '@/components/layout/petSister/HeaderPetSister';
-import { VetIllustration } from '@/components/ui/VetIllustration';
+import { Camera, Heart, Home } from 'lucide-react';
+import { ServiceLayout } from '../ServiceLayout';
 
 export function PetSisterView() {
   return (
-    <div className="flex flex-col min-h-screen overflow-hidden">
-      <Header />
-      <main className="flex-grow flex flex-col items-center p-0 w-full">
-        <SubHeader />
-        <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between py-2 px-4 md:px-8 bg-white rounded-lg mt-10">
-          <div className="w-full md:w-1/2 md:pr-8 mb-8 md:mb-0">
-            <h2 className="text-2xl md:text-3xl font-bold text-green-600 mb-4 md:mb-6">
-              Serviço Pet Sister na CliniVet
-            </h2>
-            <p className="text-base md:text-lg text-gray-700 mb-4 md:mb-6">
-              Nosso serviço de Pet Sister é ideal para cuidar do seu animalzinho no conforto da sua própria casa, enquanto você viaja ou precisa se ausentar. Sabemos o quanto é importante garantir que o seu pet esteja sendo bem cuidado em sua ausência.
-            </p>
-            <p className="text-base md:text-lg text-gray-700 mb-4 md:mb-6">
-              Além de cuidados essenciais como alimentação, passeios e momentos de recreação, oferecemos um serviço de monitoramento integral através de câmeras. Você poderá acompanhar o dia a dia do seu pet, com transmissão ao vivo ou gravações enviadas diretamente para o seu celular, para garantir que seu bichinho está sendo bem tratado e recebendo toda a atenção.
-            </p>
-            <p className="text-base md:text-lg text-gray-700 mb-4 md:mb-6">
-              Nossa equipe é composta por profissionais capacitados, que garantem o bem-estar e a segurança do seu animal. Também mantemos contato constante para que você se sinta tranquilo, sabendo que o seu pet está em boas mãos.
-            </p>
-            <NavLink href="/contact" label="Saiba mais" />
-          </div>
-
-          <div className="w-full md:w-1/2 flex justify-center">
-            <VetIllustration />
-          </div>
-        </div>
-      </main>
-      <Footer />
-    </div>
+    <ServiceLayout
+      title="Pet Sister"
+      subtitle="Cuidados personalizados para o seu pet no conforto da sua casa."
+      intro={{
+        heading: 'Serviço Pet Sister na CliniVet',
+        paragraphs: [
+          'Nosso serviço de Pet Sister é ideal para cuidar do seu pet enquanto você viaja ou precisa se ausentar. Garantimos que seu animal esteja seguro, feliz e bem cuidado em sua ausência.',
+          'Além de cuidados essenciais como alimentação, passeios e recreação, oferecemos monitoramento integral com transmissão ao vivo ou gravações enviadas diretamente para o seu celular.',
+        ],
+      }}
+      features={[
+        {
+          icon: Home,
+          title: 'No conforto de casa',
+          description: 'Seu pet permanece em seu próprio ambiente, reduzindo o estresse da ausência do tutor.',
+        },
+        {
+          icon: Camera,
+          title: 'Monitoramento em tempo real',
+          description: 'Acompanhe seu pet com transmissão ao vivo ou gravações enviadas direto para o seu celular.',
+        },
+        {
+          icon: Heart,
+          title: 'Cuidado personalizado',
+          description: 'Profissionais capacitados e dedicados ao bem-estar e segurança do seu animal.',
+        },
+      ]}
+    />
   );
 }

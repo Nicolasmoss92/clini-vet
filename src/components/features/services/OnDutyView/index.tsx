@@ -1,39 +1,35 @@
-import Footer from '@/components/footer';
-import Header from '@/components/header';
-import { NavLink } from '@/components/header/NavLink';
-import SubHeader from '@/components/layout/onDuty/HeaderOnDuty';
-import { VetIllustration } from '@/components/ui/VetIllustration';
+import { Clock, ShieldCheck, Stethoscope } from 'lucide-react';
+import { ServiceLayout } from '../ServiceLayout';
 
 export function OnDutyView() {
   return (
-    <div className="flex flex-col min-h-screen overflow-hidden">
-      <Header />
-      <main className="flex-grow flex flex-col items-center p-0 w-full">
-        <SubHeader />
-
-        <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between py-2 px-4 md:px-8 bg-white rounded-lg mt-10">
-          <div className="w-full md:w-1/2 md:pr-8 mb-8 md:mb-0">
-            <h2 className="text-2xl md:text-3xl font-bold text-green-600 mb-4 md:mb-6">
-              Serviço de Plantões na CliniVet
-            </h2>
-            <p className="text-base md:text-lg text-gray-700 mb-4 md:mb-6">
-              Nosso serviço de plantões pet está disponível 24 horas por dia, 7 dias por semana, garantindo que seu animal de estimação receba o cuidado necessário a qualquer hora, incluindo emergências e urgências veterinárias.
-            </p>
-            <p className="text-base md:text-lg text-gray-700 mb-4 md:mb-6">
-              Durante os plantões, nossa equipe de veterinários experientes está preparada para lidar com as situações mais diversas, desde atendimento clínico até cirurgias de emergência. Temos um ambiente completo com todos os equipamentos e suporte necessário para garantir o melhor cuidado para seu pet.
-            </p>
-            <p className="text-base md:text-lg text-gray-700 mb-4 md:mb-6">
-              Entendemos que emergências podem acontecer em qualquer momento, por isso oferecemos a tranquilidade de saber que seu pet sempre terá o suporte adequado, com o conforto e segurança de uma equipe de confiança.
-            </p>
-            <NavLink href="/contact" label="Saiba mais" />
-          </div>
-
-          <div className="w-full md:w-1/2 flex justify-center">
-            <VetIllustration />
-          </div>
-        </div>
-      </main>
-      <Footer />
-    </div>
+    <ServiceLayout
+      title="Plantões"
+      subtitle="Atendimento 24 horas para emergências e urgências veterinárias."
+      intro={{
+        heading: 'Serviço de Plantões na CliniVet',
+        paragraphs: [
+          'Nosso serviço de plantões está disponível 24 horas por dia, 7 dias por semana, garantindo que seu animal receba o cuidado necessário a qualquer hora, incluindo emergências e urgências veterinárias.',
+          'Nossa equipe de veterinários experientes está preparada para lidar com as situações mais diversas, desde atendimento clínico até cirurgias de emergência, com todo o equipamento e suporte necessário.',
+        ],
+      }}
+      features={[
+        {
+          icon: Clock,
+          title: 'Disponível 24h',
+          description: 'Atendimento ininterrupto todos os dias da semana, inclusive feriados.',
+        },
+        {
+          icon: Stethoscope,
+          title: 'Equipe especializada',
+          description: 'Veterinários experientes prontos para atender desde consultas até cirurgias de emergência.',
+        },
+        {
+          icon: ShieldCheck,
+          title: 'Ambiente completo',
+          description: 'Estrutura equipada para garantir segurança e conforto ao seu pet em qualquer situação.',
+        },
+      ]}
+    />
   );
 }

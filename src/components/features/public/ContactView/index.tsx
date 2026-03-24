@@ -1,6 +1,7 @@
 import Footer from '@/components/footer';
 import Header from '@/components/header';
 import { Clock, Mail, MapPin, Phone } from 'lucide-react';
+import { PageHero } from '@/components/ui/PageHero';
 import { ContactForm } from './ContactForm';
 
 const contactDetails = [
@@ -33,13 +34,10 @@ export function ContactView() {
 
       <main className="flex-grow flex flex-col items-center p-0 w-full">
 
-        {/* Hero */}
-        <div className="w-full bg-green-600 py-12 px-4 text-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Entre em Contato</h1>
-          <p className="text-green-100 text-base md:text-lg max-w-xl mx-auto">
-            Estamos prontos para atender você e seu pet. Fale conosco pelo formulário ou pelos canais abaixo.
-          </p>
-        </div>
+        <PageHero
+          title="Entre em Contato"
+          subtitle="Estamos prontos para atender você e seu pet. Fale conosco pelo formulário ou pelos canais abaixo."
+        />
 
         {/* Conteúdo */}
         <div className="w-full max-w-6xl mx-auto px-4 md:px-8 py-12 grid grid-cols-1 md:grid-cols-2 gap-10">

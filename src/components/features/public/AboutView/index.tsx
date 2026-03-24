@@ -1,5 +1,6 @@
 import Footer from '@/components/footer';
 import Header from '@/components/header';
+import { PageHero } from '@/components/ui/PageHero';
 import { VetProfile } from './VetProfile';
 
 interface Vet {
@@ -16,7 +17,7 @@ const vets: Vet[] = [
     src: '/teste.webp',
     name: '[Nome do(a) Veterinário(a)]',
     formation: 'CRMV-RS [Número] · Graduado(a) em Medicina Veterinária pela [Universidade] · Especialização em [Área]',
-    title: 'Sobre a CliniVet',
+    title: 'Nossa História',
     paragraphs: [
       'Fundada em [Ano de Fundação], a CliniVet é referência no cuidado e bem-estar de cães e gatos na região. Com uma equipe de veterinários altamente qualificados e apaixonados por animais, oferecemos uma gama completa de serviços para garantir a saúde e a felicidade dos seus pets.',
       'Nossa missão é proporcionar atendimento de excelência com um toque pessoal — desde consultas regulares até cirurgias complexas, sempre com tecnologia de ponta e compromisso com o bem-estar dos nossos pacientes.',
@@ -41,6 +42,11 @@ export function AboutView() {
       <Header />
 
       <main className="flex-grow flex flex-col items-center p-0 w-full">
+
+        <PageHero
+          title="Sobre a CliniVet"
+          subtitle="Conheça nossa história, nossa equipe e o compromisso que temos com a saúde do seu pet."
+        />
 
         {vets.map((vet, i) => (
           <div key={i} className="w-full">

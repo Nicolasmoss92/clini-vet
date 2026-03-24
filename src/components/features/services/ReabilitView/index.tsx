@@ -1,35 +1,35 @@
-import Footer from '@/components/footer';
-import Header from '@/components/header';
-import { NavLink } from '@/components/header/NavLink';
-import SubHeader from '@/components/layout/reabilit/HeaderReabilit';
-import { VetIllustration } from '@/components/ui/VetIllustration';
+import { Activity, Dumbbell, Waves } from 'lucide-react';
+import { ServiceLayout } from '../ServiceLayout';
 
 export function ReabilitView() {
   return (
-    <div className="flex flex-col min-h-screen overflow-hidden">
-      <Header />
-      <main className="flex-grow flex flex-col items-center p-0 w-full">
-        <SubHeader />
-        <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between py-2 px-4 md:px-8 bg-white rounded-lg mt-10">
-          <div className="w-full md:w-1/2 md:pr-8 mb-8 md:mb-0">
-            <h2 className="text-2xl md:text-3xl font-bold text-green-600 mb-4 md:mb-6">
-              Terapia Animal e Reabilitação
-            </h2>
-            <p className="text-base md:text-lg text-gray-700 mb-4 md:mb-6">
-              A terapia animal é uma abordagem essencial para a recuperação física e emocional de animais que passaram por traumas ou procedimentos cirúrgicos. A reabilitação ajuda na recuperação muscular e motora, promovendo o bem-estar e uma vida mais saudável para os pets.
-            </p>
-            <p className="text-base md:text-lg text-gray-700 mb-4 md:mb-6">
-              Utilizamos técnicas como fisioterapia, hidroterapia e exercícios de fortalecimento, sempre adaptados às necessidades específicas de cada animal. Nossa equipe de profissionais está comprometida em oferecer o melhor tratamento para acelerar a recuperação.
-            </p>
-            <NavLink href="/contact" label="Saiba mais" />
-          </div>
-
-          <div className="w-full md:w-1/2 flex justify-center">
-            <VetIllustration />
-          </div>
-        </div>
-      </main>
-      <Footer />
-    </div>
+    <ServiceLayout
+      title="Reabilitação e Terapia"
+      subtitle="Recuperação física e bem-estar para o seu pet com técnicas avançadas."
+      intro={{
+        heading: 'Terapia Animal e Reabilitação',
+        paragraphs: [
+          'A terapia animal é essencial para a recuperação física e emocional de animais que passaram por traumas ou procedimentos cirúrgicos. A reabilitação ajuda na recuperação muscular e motora, promovendo bem-estar e qualidade de vida.',
+          'Utilizamos técnicas como fisioterapia, hidroterapia e exercícios de fortalecimento, sempre adaptados às necessidades específicas de cada animal.',
+        ],
+      }}
+      features={[
+        {
+          icon: Activity,
+          title: 'Fisioterapia',
+          description: 'Exercícios terapêuticos para recuperação de mobilidade, força muscular e coordenação motora.',
+        },
+        {
+          icon: Waves,
+          title: 'Hidroterapia',
+          description: 'Reabilitação em meio aquático com baixo impacto nas articulações, ideal para pós-operatório.',
+        },
+        {
+          icon: Dumbbell,
+          title: 'Fortalecimento muscular',
+          description: 'Protocolos personalizados para reforçar a musculatura e prevenir novas lesões.',
+        },
+      ]}
+    />
   );
 }
