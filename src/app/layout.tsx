@@ -7,8 +7,12 @@ import { ToastProvider } from "@/contexts/ToastContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "CliniVet",
-  description: "Clínica Veterinária",
+  title: "CliniVet - Clínica Veterinária",
+  description: "Clínica veterinária especializada no cuidado de cães e gatos em Nova Prata, RS. Cirurgias, plantões 24h, reabilitação e muito mais.",
+  icons: {
+    icon: '/logo.png',
+    apple: '/logo.png',
+  },
 };
 
 export const viewport: Viewport = {
