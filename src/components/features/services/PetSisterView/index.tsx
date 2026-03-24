@@ -1,6 +1,6 @@
 import Footer from '@/components/footer';
 import Header from '@/components/header';
-import { ButtonLearnAbout } from '@/components/layout/petSister/ButtonLearnMorePetSister';
+import { NavLink } from '@/components/header/NavLink';
 import SubHeader from '@/components/layout/petSister/HeaderPetSister';
 
 export function PetSisterView() {
@@ -23,7 +23,7 @@ export function PetSisterView() {
             <p className="text-base md:text-lg text-gray-700 mb-4 md:mb-6">
               Nossa equipe é composta por profissionais capacitados, que garantem o bem-estar e a segurança do seu animal. Também mantemos contato constante para que você se sinta tranquilo, sabendo que o seu pet está em boas mãos.
             </p>
-            <ButtonLearnAbout />
+            <NavLink href="/contact" label="Saiba mais" />
           </div>
 
           <div className="w-full md:w-1/2 flex justify-center">

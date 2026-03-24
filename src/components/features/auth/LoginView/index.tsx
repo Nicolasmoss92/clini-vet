@@ -83,12 +83,12 @@ function LoginForm() {
         </button>
       </form>
 
-      <p className="text-xs text-gray-400 text-center mt-6">
-        Primeiro acesso?{' '}
-        <Link href="/primeiro-acesso" className="text-green-600 hover:underline">
-          Ativar minha conta
-        </Link>
-      </p>
+      <Link
+        href="/primeiro-acesso"
+        className="w-full block text-sm font-medium text-center text-green-600 border border-green-600 py-2 rounded-lg hover:bg-green-600 hover:text-white transition duration-300 mt-3"
+      >
+        Ativar minha conta
+      </Link>
     </div>
   );
 }
@@ -96,9 +96,16 @@ function LoginForm() {
 export function LoginView() {
   return (
     <div className="min-h-screen flex flex-col">
-      <div className="bg-white h-20 flex items-center px-6 shadow-md">
+      <div className="bg-white h-20 flex items-center justify-between px-6 shadow-md">
         <Link href="/home">
           <img src="/logo.png" alt="CliniVet" className="h-14 object-contain" />
+        </Link>
+        <Link
+          href="/home"
+          className="flex items-center gap-2 text-sm text-white bg-green-600 px-4 py-2 rounded-lg hover:bg-green-700 transition duration-200"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+          Voltar ao site
         </Link>
       </div>
       <main className="flex-grow flex items-center justify-center p-4">

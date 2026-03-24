@@ -1,6 +1,6 @@
 import Footer from '@/components/footer';
 import Header from '@/components/header';
-import { ButtonLearnAbout } from '@/components/layout/reabilit/ButtonLearnMorereabilit';
+import { NavLink } from '@/components/header/NavLink';
 import SubHeader from '@/components/layout/reabilit/HeaderReabilit';
 
 export function ReabilitView() {
@@ -20,7 +20,7 @@ export function ReabilitView() {
             <p className="text-base md:text-lg text-gray-700 mb-4 md:mb-6">
               Utilizamos técnicas como fisioterapia, hidroterapia e exercícios de fortalecimento, sempre adaptados às necessidades específicas de cada animal. Nossa equipe de profissionais está comprometida em oferecer o melhor tratamento para acelerar a recuperação.
             </p>
-            <ButtonLearnAbout />
+            <NavLink href="/contact" label="Saiba mais" />
           </div>
 
           <div className="w-full md:w-1/2 flex justify-center">

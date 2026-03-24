@@ -4,13 +4,14 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { AppShell } from '@/components/layout/AppShell';
+import { LayoutDashboard, PawPrint, CalendarCheck, Syringe, Receipt } from 'lucide-react';
 
 const navItems = [
-  { label: 'Visão Geral', href: '/minha-area/visao-geral' },
-  { label: 'Meus Pets', href: '/minha-area' },
-  { label: 'Agendamentos', href: '/minha-area/agendamentos' },
-  { label: 'Vacinas', href: '/minha-area/vacinas' },
-  { label: 'Histórico Financeiro', href: '/minha-area/historico-financeiro' },
+  { label: 'Visão Geral',          href: '/minha-area/visao-geral',           icon: LayoutDashboard },
+  { label: 'Meus Pets',            href: '/minha-area',                       icon: PawPrint },
+  { label: 'Agendamentos',         href: '/minha-area/agendamentos',          icon: CalendarCheck },
+  { label: 'Vacinas',              href: '/minha-area/vacinas',               icon: Syringe },
+  { label: 'Histórico Financeiro', href: '/minha-area/historico-financeiro',  icon: Receipt },
 ];
 
 export default function MinhaAreaLayout({ children }: { children: React.ReactNode }) {

@@ -24,7 +24,7 @@ export function ButtonLogin() {
       href="/login"
       className="bg-green-600 text-white text-sm font-medium px-4 py-2 rounded-lg border border-green-600 hover:bg-white hover:text-green-600 transition duration-300 whitespace-nowrap"
     >
-      Login / Área do Cliente
+      Área do Cliente
     </Link>
   );
 }

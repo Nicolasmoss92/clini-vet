@@ -1,6 +1,6 @@
 import Footer from '@/components/footer';
 import Header from '@/components/header';
-import { ButtonLearnAbout } from '@/components/layout/onDuty/ButtonlearnMoreOnDuty';
+import { NavLink } from '@/components/header/NavLink';
 import SubHeader from '@/components/layout/onDuty/HeaderOnDuty';
 
 export function OnDutyView() {
@@ -24,7 +24,7 @@ export function OnDutyView() {
             <p className="text-base md:text-lg text-gray-700 mb-4 md:mb-6">
               Entendemos que emergências podem acontecer em qualquer momento, por isso oferecemos a tranquilidade de saber que seu pet sempre terá o suporte adequado, com o conforto e segurança de uma equipe de confiança.
             </p>
-            <ButtonLearnAbout />
+            <NavLink href="/contact" label="Saiba mais" />
           </div>
 
           <div className="w-full md:w-1/2 flex justify-center">

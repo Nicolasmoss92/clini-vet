@@ -4,14 +4,15 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { AppShell } from '@/components/layout/AppShell';
+import { LayoutDashboard, CalendarDays, ClipboardList, PawPrint, Users, TrendingUp } from 'lucide-react';
 
 const navItems = [
-  { label: 'Visão Geral', href: '/dashboard' },
-  { label: 'Agenda', href: '/dashboard/agenda' },
-  { label: 'Agendamentos', href: '/dashboard/agendamentos' },
-  { label: 'Animais', href: '/dashboard/animais' },
-  { label: 'Tutores', href: '/dashboard/tutores' },
-  { label: 'Finanças', href: '/dashboard/financas' },
+  { label: 'Visão Geral',   href: '/dashboard',                icon: LayoutDashboard },
+  { label: 'Agenda',        href: '/dashboard/agenda',         icon: CalendarDays },
+  { label: 'Agendamentos',  href: '/dashboard/agendamentos',   icon: ClipboardList },
+  { label: 'Animais',       href: '/dashboard/animais',        icon: PawPrint },
+  { label: 'Tutores',       href: '/dashboard/tutores',        icon: Users },
+  { label: 'Finanças',      href: '/dashboard/financas',       icon: TrendingUp },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
