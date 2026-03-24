@@ -15,6 +15,15 @@ const SERVICOS = [
   { tipo: 'PETSITTER',  label: 'Pet Sister',   stroke: '#7c3aed', light: 'bg-purple-100', text: 'text-purple-700', bar: 'bg-purple-500' },
 ];
 
+const CATEGORIA_STROKE: Record<string, string> = {
+  AGUA:             '#3b82f6',
+  LUZ:              '#eab308',
+  ALUGUEL:          '#64748b',
+  PRODUTO_CIRURGIA: '#06b6d4',
+  PRODUTO_BANHO:    '#14b8a6',
+  OUTROS:           '#9ca3af',
+};
+
 // SVG Donut chart — radius 54, cx/cy 64
 const R = 54;
 const CX = 64;
@@ -152,15 +161,6 @@ export function FinancasView() {
   const diff = 100 - receitaSegments.reduce((s, x) => s + x.pct, 0);
   if (receitaSegments.length > 0) receitaSegments[0].pct += diff;
 
-  // Donut de atendimentos por tipo
-  const atendimentosSegments: DonutSegment[] = porTipo.map((s) => ({
-    pct: s.pct,
-    stroke: s.stroke,
-    label: s.label,
-  }));
-  const diff2 = 100 - atendimentosSegments.reduce((s, x) => s + x.pct, 0);
-  if (atendimentosSegments.length > 0) atendimentosSegments[0].pct += diff2;
-
   // Histórico de concluídos do mês
   const historico = concluidosMes
     .sort((a, b) => b.data.localeCompare(a.data))
@@ -168,6 +168,21 @@ export function FinancasView() {
 
   const totalDespesas = despesas.reduce((s, d) => s + d.valor, 0);
   const lucroLiquido = receitaTotal - totalDespesas;
+
+  // Donut de despesas por categoria
+  const despesasPorCategoria = CATEGORIA_OPTIONS.map((cat) => {
+    const total = despesas.filter((d) => d.categoria === cat).reduce((s, d) => s + d.valor, 0);
+    return { categoria: cat, total, stroke: CATEGORIA_STROKE[cat] };
+  }).filter((c) => c.total > 0);
+
+  const totalDespesasRef = totalDespesas || 1;
+  const despesasSegments: DonutSegment[] = despesasPorCategoria.map((c) => ({
+    pct: Math.round((c.total / totalDespesasRef) * 100),
+    stroke: c.stroke,
+    label: CATEGORIA_LABEL[c.categoria],
+  }));
+  const diffD = 100 - despesasSegments.reduce((s, x) => s + x.pct, 0);
+  if (despesasSegments.length > 0) despesasSegments[0].pct += diffD;
 
   return (
     <div className="max-w-5xl mx-auto">
@@ -289,14 +304,7 @@ export function FinancasView() {
       </div>
 
       {/* Cards de resumo */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <div className="bg-white rounded-xl border border-t-4 border-t-emerald-600 border-gray-100 shadow-md p-6">
-          <p className="text-sm text-gray-500 mb-1">Receita total</p>
-          <p className="text-3xl font-bold text-emerald-600">
-            R$ {receitaTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-          </p>
-          <p className="text-xs text-gray-400 mt-1">{concluidosMes.length} atendimento{concluidosMes.length !== 1 ? 's' : ''} concluído{concluidosMes.length !== 1 ? 's' : ''}</p>
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         <div className="bg-white rounded-xl border border-t-4 border-t-green-600 border-gray-100 shadow-md p-6">
           <p className="text-sm text-gray-500 mb-1">Serviços</p>
           <p className="text-3xl font-bold text-green-600">
@@ -322,18 +330,15 @@ export function FinancasView() {
         </div>
       </div>
 
-      {/* Gráficos + Serviços mais utilizados */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      {/* Gráficos */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-4">
 
         {/* Donut — Receita por tipo */}
         <div className="bg-white rounded-xl border border-gray-100 shadow-md p-6">
           <h2 className="text-base font-semibold text-gray-700 mb-5">Receita por Tipo de Serviço</h2>
           <div className="flex items-center gap-6">
             <div className="flex-shrink-0">
-              <DonutChart
-                segments={receitaSegments}
-                center={`R$${Math.round(receitaTotal)}`}
-              />
+              <DonutChart segments={receitaSegments} center={`R$${Math.round(receitaTotal)}`} />
             </div>
             <div className="flex flex-col gap-3 flex-1">
               {porTipo.map((s) => (
@@ -348,53 +353,75 @@ export function FinancasView() {
                     </span>
                   </div>
                   <div className="w-full bg-gray-100 rounded-full h-1.5">
-                    <div
-                      className="h-1.5 rounded-full transition-all duration-500"
-                      style={{ width: `${receitaTotal > 0 ? Math.round((s.receita / receitaTotal) * 100) : 0}%`, backgroundColor: s.stroke }}
-                    />
+                    <div className="h-1.5 rounded-full transition-all duration-500"
+                      style={{ width: `${receitaTotal > 0 ? Math.round((s.receita / receitaTotal) * 100) : 0}%`, backgroundColor: s.stroke }} />
                   </div>
                 </div>
               ))}
-              {receitaTotal === 0 && (
-                <p className="text-xs text-gray-400 italic">Nenhum atendimento concluído com valor.</p>
-              )}
+              {receitaTotal === 0 && <p className="text-xs text-gray-400 italic">Nenhum atendimento concluído com valor.</p>}
             </div>
           </div>
         </div>
 
-        {/* Donut — Serviços mais utilizados */}
+        {/* Donut — Despesas por categoria */}
         <div className="bg-white rounded-xl border border-gray-100 shadow-md p-6">
-          <h2 className="text-base font-semibold text-gray-700 mb-5">Serviços Mais Utilizados</h2>
+          <h2 className="text-base font-semibold text-gray-700 mb-5">Despesas por Categoria</h2>
           <div className="flex items-center gap-6">
             <div className="flex-shrink-0">
               <DonutChart
-                segments={atendimentosSegments}
-                center={`${doMes.length}`}
+                segments={despesasSegments.length > 0 ? despesasSegments : [{ pct: 100, stroke: '#f3f4f6', label: 'Sem despesas' }]}
+                center={`R$${Math.round(totalDespesas)}`}
               />
             </div>
             <div className="flex flex-col gap-3 flex-1">
-              {porTipo.map((s, i) => (
-                <div key={s.tipo} className={`rounded-xl p-3 ${s.light}`}>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <div className="flex items-center gap-2">
-                      {i === 0 && <span className="text-xs">🥇</span>}
-                      {i === 1 && <span className="text-xs">🥈</span>}
-                      {i === 2 && <span className="text-xs">🥉</span>}
-                      <span className={`text-sm font-semibold ${s.text}`}>{s.label}</span>
+              {despesasPorCategoria.length === 0 ? (
+                <p className="text-xs text-gray-400 italic">Nenhuma despesa lançada este mês.</p>
+              ) : (
+                despesasPorCategoria.map((c) => (
+                  <div key={c.categoria}>
+                    <div className="flex items-center justify-between mb-1">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: c.stroke }} />
+                        <span className="text-sm text-gray-600">{CATEGORIA_LABEL[c.categoria]}</span>
+                      </div>
+                      <span className="text-sm font-semibold text-gray-700">
+                        R$ {c.total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                      </span>
                     </div>
-                    <span className={`text-lg font-bold ${s.text}`}>{s.pct}%</span>
+                    <div className="w-full bg-gray-100 rounded-full h-1.5">
+                      <div className="h-1.5 rounded-full transition-all duration-500"
+                        style={{ width: `${totalDespesas > 0 ? Math.round((c.total / totalDespesas) * 100) : 0}%`, backgroundColor: c.stroke }} />
+                    </div>
                   </div>
-                  <div className="w-full bg-white bg-opacity-60 rounded-full h-1.5 mb-1">
-                    <div className={`${s.bar} h-1.5 rounded-full transition-all duration-500`} style={{ width: `${s.pct}%` }} />
-                  </div>
-                  <p className={`text-xs ${s.text} opacity-75`}>
-                    {s.count} agendamento{s.count !== 1 ? 's' : ''} · {s.concluidos} concluído{s.concluidos !== 1 ? 's' : ''}
-                  </p>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Cards de serviços */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+        {porTipo.map((s, i) => (
+          <div key={s.tipo} className={`rounded-xl border border-gray-100 shadow-md p-5 ${s.light}`}>
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-2">
+                {i === 0 && <span className="text-sm">🥇</span>}
+                {i === 1 && <span className="text-sm">🥈</span>}
+                {i === 2 && <span className="text-sm">🥉</span>}
+                <span className={`text-sm font-semibold ${s.text}`}>{s.label}</span>
+              </div>
+              <span className={`text-xl font-bold ${s.text}`}>{s.pct}%</span>
+            </div>
+            <div className="w-full bg-white bg-opacity-60 rounded-full h-1.5 mb-2">
+              <div className={`${s.bar} h-1.5 rounded-full transition-all duration-500`} style={{ width: `${s.pct}%` }} />
+            </div>
+            <div className="flex justify-between text-xs">
+              <span className={`${s.text} opacity-75`}>{s.count} agendamento{s.count !== 1 ? 's' : ''}</span>
+              <span className={`font-semibold ${s.text}`}>R$ {s.receita.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* Histórico de atendimentos concluídos */}
