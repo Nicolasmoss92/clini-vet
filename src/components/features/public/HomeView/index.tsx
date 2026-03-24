@@ -36,8 +36,8 @@ export function HomeView() {
           </div>
 
           <div className="w-full md:w-1/2 flex justify-center">
-            <VetIllustration src="/luisa.png" alt="Dra. Luisa" />
-          </div>
+            <VetIllustration src="/home.png" alt="Dra. Luisa" />
+          </div>  
         </div>
 
         <div className="h-2 bg-green-600 w-full mt-8"></div>
