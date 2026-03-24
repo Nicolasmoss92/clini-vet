@@ -1,6 +1,8 @@
 import Footer from '@/components/footer';
 import Header from '@/components/header';
+import { VetIllustration } from '@/components/ui/VetIllustration';
 import { ServiceCard } from './ServiceCard';
+import { BannerCarousel } from './BannerCarousel';
 
 const servicos = [
   { href: '/header/surgery',   title: 'Cirurgias',              description: 'Realizamos cirurgias de alta complexidade com equipe especializada, garantindo o bem-estar do seu animal.' },
@@ -15,15 +17,7 @@ export function HomeView() {
       <Header />
 
       <main className="flex-grow flex flex-col items-center p-0 w-full">
-        <div className="relative w-full h-[300px] md:h-[500px] bg-gray-100 overflow-hidden mb-0">
-          <div className="w-full">
-            <img
-              src="/teste.webp"
-              alt="Logo"
-              className="w-full h-auto"
-            />
-          </div>
-        </div>
+        <BannerCarousel />
 
         <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between py-8 px-4 md:px-8 bg-white rounded-lg mt-6">
           <div className="w-full md:w-1/2 md:pr-8 mb-8 md:mb-0">
@@ -42,11 +36,7 @@ export function HomeView() {
           </div>
 
           <div className="w-full md:w-1/2 flex justify-center">
-            <img
-              src="/teste.webp"
-              alt="Veterinária com um pet"
-              className="w-64 h-64 md:w-96 md:h-96 object-cover rounded-full border-4 border-green-600"
-            />
+            <VetIllustration src="/luisa.png" alt="Dra. Luisa" />
           </div>
         </div>
 

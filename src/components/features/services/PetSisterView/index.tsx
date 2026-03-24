@@ -2,6 +2,7 @@ import Footer from '@/components/footer';
 import Header from '@/components/header';
 import { NavLink } from '@/components/header/NavLink';
 import SubHeader from '@/components/layout/petSister/HeaderPetSister';
+import { VetIllustration } from '@/components/ui/VetIllustration';
 
 export function PetSisterView() {
   return (
@@ -27,11 +28,7 @@ export function PetSisterView() {
           </div>
 
           <div className="w-full md:w-1/2 flex justify-center">
-            <img
-              src="/teste.webp"
-              alt="Pet Sister cuidando de um animal"
-              className="w-64 h-64 md:w-96 md:h-96 object-cover rounded-full border-4 border-green-600"
-            />
+            <VetIllustration />
           </div>
         </div>
       </main>

@@ -2,6 +2,7 @@ import Footer from '@/components/footer';
 import Header from '@/components/header';
 import { NavLink } from '@/components/header/NavLink';
 import SubHeader from '@/components/layout/onDuty/HeaderOnDuty';
+import { VetIllustration } from '@/components/ui/VetIllustration';
 
 export function OnDutyView() {
   return (
@@ -28,11 +29,7 @@ export function OnDutyView() {
           </div>
 
           <div className="w-full md:w-1/2 flex justify-center">
-            <img
-              src="/teste.webp"
-              alt="Veterinária com um pet"
-              className="w-64 h-64 md:w-96 md:h-96 object-cover rounded-full border-4 border-green-600"
-            />
+            <VetIllustration />
           </div>
         </div>
       </main>

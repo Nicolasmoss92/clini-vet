@@ -1,5 +1,6 @@
 import Footer from "@/components/footer";
 import Header from "@/components/header";
+import { VetIllustration } from "@/components/ui/VetIllustration";
 
 export default function Home() {
     return (
@@ -23,11 +24,7 @@ export default function Home() {
                     </div>
 
                     <div className="w-full md:w-1/2 flex justify-center">
-                        <img
-                            src="/teste.webp" // Substitua pelo caminho correto da imagem
-                            alt="Veterinária com um pet"
-                            className="w-64 h-64 md:w-96 md:h-96 object-cover rounded-full border-4 border-green-600"
-                        />
+                        <VetIllustration />
                     </div>
                 </div>
 
@@ -35,11 +32,7 @@ export default function Home() {
                 <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between py-16 px-4 md:px-8 bg-white rounded-lg -mt-16">
                     
                     <div className="w-full md:w-1/2 flex justify-center">
-                        <img
-                            src="/teste.webp" 
-                            alt="Veterinária com um pet"
-                            className="w-64 h-64 md:w-96 md:h-96 object-cover rounded-full border-4 border-green-600"
-                        />
+                        <VetIllustration />
                     </div>
 
                     <div className="w-full md:w-1/2">
