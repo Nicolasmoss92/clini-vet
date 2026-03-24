@@ -1,106 +1,69 @@
-'use client';
-
 import Footer from '@/components/footer';
 import Header from '@/components/header';
-import { useState } from 'react';
+import { Clock, Mail, MapPin, Phone } from 'lucide-react';
+import { ContactForm } from './ContactForm';
+
+const contactDetails = [
+  {
+    icon: MapPin,
+    label: 'Endereço',
+    lines: ['R. Gen. Flores da Cunha, 850', 'Centro — Nova Prata, RS'],
+  },
+  {
+    icon: Phone,
+    label: 'Telefone',
+    lines: ['(54) 99999-9999'],
+  },
+  {
+    icon: Mail,
+    label: 'E-mail',
+    lines: ['contato@clinivet.com.br'],
+  },
+  {
+    icon: Clock,
+    label: 'Horário de atendimento',
+    lines: ['Seg – Sex: 08h às 18h', 'Sáb: 08h às 12h', 'Plantão 24h para emergências'],
+  },
+];
 
 export function ContactView() {
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [message, setMessage] = useState('');
-  const [errors, setErrors] = useState<{ name?: string; phone?: string; message?: string }>({});
-  const [sent, setSent] = useState(false);
-
-  const clinicWhatsAppNumber = '5591999999999';
-
-  const validate = () => {
-    const newErrors: typeof errors = {};
-    if (!name.trim()) newErrors.name = 'Nome é obrigatório.';
-    if (!phone.trim()) newErrors.phone = 'Telefone é obrigatório.';
-    if (!message.trim()) newErrors.message = 'Mensagem é obrigatória.';
-    return newErrors;
-  };
-
-  const sendWhatsAppMessage = () => {
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-    setErrors({});
-    const url = `https://wa.me/${clinicWhatsAppNumber}?text=${encodeURIComponent(
-      `Nome: ${name}\nTelefone: ${phone}\nMensagem: ${message}`
-    )}`;
-    window.open(url, '_blank');
-    setSent(true);
-    setName('');
-    setPhone('');
-    setMessage('');
-  };
-
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">
       <Header />
 
-      <main className="flex-grow flex flex-col justify-center items-center p-4 w-full">
-        <div className="w-full max-w-2xl mx-auto bg-white p-6 sm:p-8 rounded-lg shadow-lg my-8">
-          <h2 className="text-3xl font-bold text-green-600 mb-4 text-center">Contato</h2>
+      <main className="flex-grow flex flex-col items-center p-0 w-full">
 
-          <p className="text-gray-700 mb-6 text-center">
-            Para garantir sua segurança e evitar possíveis golpes, entre em contato conosco através desta mensagem. Respondemos rapidamente para atender sua solicitação.
+        {/* Hero */}
+        <div className="w-full bg-green-600 py-12 px-4 text-center">
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Entre em Contato</h1>
+          <p className="text-green-100 text-base md:text-lg max-w-xl mx-auto">
+            Estamos prontos para atender você e seu pet. Fale conosco pelo formulário ou pelos canais abaixo.
           </p>
+        </div>
 
-          {sent && (
-            <div className="mb-6 p-4 bg-green-50 border border-green-300 text-green-700 rounded-lg text-center">
-              Mensagem enviada com sucesso! Entraremos em contato em breve.
-            </div>
-          )}
+        {/* Conteúdo */}
+        <div className="w-full max-w-6xl mx-auto px-4 md:px-8 py-12 grid grid-cols-1 md:grid-cols-2 gap-10">
 
-          <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-700 font-bold mb-2">Nome</label>
-            <input
-              type="text"
-              id="name"
-              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-green-600 ${errors.name ? 'border-red-400' : 'border-gray-300'}`}
-              placeholder="Digite seu nome"
-              value={name}
-              onChange={(e) => { setName(e.target.value); setSent(false); }}
-            />
-            {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+          {/* Informações */}
+          <div className="flex flex-col gap-6">
+            <h2 className="text-2xl font-bold text-green-700">Informações</h2>
+            {contactDetails.map(({ icon: Icon, label, lines }) => (
+              <div key={label} className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                  <Icon size={18} className="text-green-600" />
+                </div>
+                <div>
+                  <p className="font-semibold text-gray-800 text-sm">{label}</p>
+                  {lines.map((line) => (
+                    <p key={line} className="text-gray-500 text-sm">{line}</p>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
 
-          <div className="mb-4">
-            <label htmlFor="phone" className="block text-gray-700 font-bold mb-2">Telefone</label>
-            <input
-              type="tel"
-              id="phone"
-              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-green-600 ${errors.phone ? 'border-red-400' : 'border-gray-300'}`}
-              placeholder="(99) 99999-9999"
-              value={phone}
-              onChange={(e) => { setPhone(e.target.value); setSent(false); }}
-            />
-            {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
-          </div>
+          <ContactForm />
 
-          <div className="mb-6">
-            <label htmlFor="message" className="block text-gray-700 font-bold mb-2">Mensagem</label>
-            <textarea
-              id="message"
-              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-green-600 ${errors.message ? 'border-red-400' : 'border-gray-300'}`}
-              placeholder="Digite sua mensagem"
-              rows={4}
-              value={message}
-              onChange={(e) => { setMessage(e.target.value); setSent(false); }}
-            />
-            {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
-          </div>
-
-          <button
-            onClick={sendWhatsAppMessage}
-            className="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg border border-green-600 transition duration-300 hover:bg-white hover:text-green-600"
-          >
-            Enviar via WhatsApp
-          </button>
         </div>
       </main>
 
