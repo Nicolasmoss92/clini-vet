@@ -1,5 +1,13 @@
 import Footer from '@/components/footer';
 import Header from '@/components/header';
+import { ServiceCard } from './ServiceCard';
+
+const servicos = [
+  { href: '/header/surgery',   title: 'Cirurgias',              description: 'Realizamos cirurgias de alta complexidade com equipe especializada, garantindo o bem-estar do seu animal.' },
+  { href: '/header/onDuty',    title: 'Plantões',               description: 'Atendimento 24 horas com profissionais de prontidão para emergências e cuidados.' },
+  { href: '/header/petSister', title: 'Amo Pet Sister',         description: 'Serviço de cuidados personalizados para pets em recuperação ou com necessidades especiais.' },
+  { href: '/header/reabilit',  title: 'Reabilitação e Terapia', description: 'Terapias avançadas para recuperação e bem-estar do seu pet, incluindo fisioterapia e acupuntura.' },
+];
 
 export function HomeView() {
   return (
@@ -49,53 +57,9 @@ export function HomeView() {
             Conheça Nossas Soluções
           </h2>
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <a href="/header/surgery" className="group flex">
-              <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-t-4 border-t-green-600 flex flex-col flex-1">
-                <h3 className="text-xl font-semibold text-green-600 mb-3">Cirurgias</h3>
-                <p className="text-gray-600 text-sm leading-relaxed flex-grow">
-                  Realizamos cirurgias de alta complexidade com equipe especializada, garantindo o bem-estar do seu animal.
-                </p>
-                <span className="mt-4 inline-block bg-green-600 text-white text-sm font-medium py-2 px-4 rounded-lg border border-green-600 hover:bg-white hover:text-green-600 transition duration-300 text-center">
-                  Saiba mais
-                </span>
-              </div>
-            </a>
-
-            <a href="/header/onDuty" className="group flex">
-              <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-t-4 border-t-green-600 flex flex-col flex-1">
-                <h3 className="text-xl font-semibold text-green-600 mb-3">Plantões</h3>
-                <p className="text-gray-600 text-sm leading-relaxed flex-grow">
-                  Atendimento 24 horas com profissionais de prontidão para emergências e cuidados.
-                </p>
-                <span className="mt-4 inline-block bg-green-600 text-white text-sm font-medium py-2 px-4 rounded-lg border border-green-600 hover:bg-white hover:text-green-600 transition duration-300 text-center">
-                  Saiba mais
-                </span>
-              </div>
-            </a>
-
-            <a href="/header/petSister" className="group flex">
-              <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-t-4 border-t-green-600 flex flex-col flex-1">
-                <h3 className="text-xl font-semibold text-green-600 mb-3">Amo Pet Sister</h3>
-                <p className="text-gray-600 text-sm leading-relaxed flex-grow">
-                  Serviço de cuidados personalizados para pets em recuperação ou com necessidades especiais.
-                </p>
-                <span className="mt-4 inline-block bg-green-600 text-white text-sm font-medium py-2 px-4 rounded-lg border border-green-600 hover:bg-white hover:text-green-600 transition duration-300 text-center">
-                  Saiba mais
-                </span>
-              </div>
-            </a>
-
-            <a href="/header/reabilit" className="group flex">
-              <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-t-4 border-t-green-600 flex flex-col flex-1">
-                <h3 className="text-xl font-semibold text-green-600 mb-3">Reabilitação e Terapia</h3>
-                <p className="text-gray-600 text-sm leading-relaxed flex-grow">
-                  Terapias avançadas para recuperação e bem-estar do seu pet, incluindo fisioterapia e acupuntura.
-                </p>
-                <span className="mt-4 inline-block bg-green-600 text-white text-sm font-medium py-2 px-4 rounded-lg border border-green-600 hover:bg-white hover:text-green-600 transition duration-300 text-center">
-                  Saiba mais
-                </span>
-              </div>
-            </a>
+            {servicos.map((s) => (
+              <ServiceCard key={s.href} {...s} />
+            ))}
           </div>
         </div>
 
@@ -107,13 +71,13 @@ export function HomeView() {
           </h2>
           <div className="relative w-full h-64 sm:h-80 md:h-96 rounded-lg overflow-hidden shadow-lg">
             <iframe
-              src="https://maps.google.com/maps?q=R.+Gen.+Flores+da+Cunha,+850,+Centro,+Nova+Prata,+RS,+95320-000&output=embed"
+              src="https://maps.google.com/maps?q=R+Gen+Flores+da+Cunha+850+Nova+Prata+RS+Brasil&t=&z=17&ie=UTF8&iwloc=&output=embed"
               width="100%"
               height="100%"
               style={{ border: 0 }}
               allowFullScreen={true}
-              aria-hidden="false"
-              tabIndex={0}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
             />
           </div>
         </div>
