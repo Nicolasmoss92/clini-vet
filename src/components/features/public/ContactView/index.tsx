@@ -2,7 +2,6 @@
 
 import Footer from '@/components/footer';
 import Header from '@/components/header';
-import { PageTransition } from '@/components/ui/PageTransition';
 import { useState } from 'react';
 
 export function ContactView() {
@@ -44,7 +43,6 @@ export function ContactView() {
       <Header />
 
       <main className="flex-grow flex flex-col justify-center items-center p-4 w-full">
-        <PageTransition>
         <div className="w-full max-w-2xl mx-auto bg-white p-6 sm:p-8 rounded-lg shadow-lg my-8">
           <h2 className="text-3xl font-bold text-green-600 mb-4 text-center">Contato</h2>
 
@@ -104,7 +102,6 @@ export function ContactView() {
             Enviar via WhatsApp
           </button>
         </div>
-        </PageTransition>
       </main>
 
       <Footer />

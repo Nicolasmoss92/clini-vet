@@ -2,14 +2,12 @@ import Footer from '@/components/footer';
 import Header from '@/components/header';
 import { NavLink } from '@/components/header/NavLink';
 import SubHeader from '@/components/layout/reabilit/HeaderReabilit';
-import { PageTransition } from '@/components/ui/PageTransition';
 
 export function ReabilitView() {
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">
       <Header />
       <main className="flex-grow flex flex-col items-center p-0 w-full">
-        <PageTransition>
         <SubHeader />
         <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between py-2 px-4 md:px-8 bg-white rounded-lg mt-10">
           <div className="w-full md:w-1/2 md:pr-8 mb-8 md:mb-0">
@@ -33,7 +31,6 @@ export function ReabilitView() {
             />
           </div>
         </div>
-        </PageTransition>
       </main>
       <Footer />
     </div>

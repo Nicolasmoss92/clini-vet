@@ -1,6 +1,5 @@
 import Footer from '@/components/footer';
 import Header from '@/components/header';
-import { PageTransition } from '@/components/ui/PageTransition';
 
 export function HomeView() {
   return (
@@ -8,7 +7,6 @@ export function HomeView() {
       <Header />
 
       <main className="flex-grow flex flex-col items-center p-0 w-full">
-        <PageTransition>
         <div className="relative w-full h-[300px] md:h-[500px] bg-gray-100 overflow-hidden mb-0">
           <div className="w-full">
             <img
@@ -119,7 +117,6 @@ export function HomeView() {
             />
           </div>
         </div>
-        </PageTransition>
       </main>
 
       <Footer />

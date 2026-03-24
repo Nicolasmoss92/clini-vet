@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { authApi } from '@/lib/api';
 import { maskTelefone } from '@/lib/masks';
 import Link from 'next/link';
-import { PageTransition } from '@/components/ui/PageTransition';
 
 export function PrimeiroAcessoView() {
   const router = useRouter();
@@ -51,7 +50,6 @@ export function PrimeiroAcessoView() {
       </div>
 
       <main className="flex-grow flex items-center justify-center p-4">
-        <PageTransition>
         <div className="w-full max-w-md bg-white rounded-xl shadow-md border border-gray-100 border-t-4 border-t-green-600 p-8">
           <h1 className="text-2xl font-bold text-green-600 mb-2 text-center">Primeiro Acesso</h1>
           <p className="text-gray-500 text-sm text-center mb-6">
@@ -130,7 +128,6 @@ export function PrimeiroAcessoView() {
             </Link>
           </p>
         </div>
-        </PageTransition>
       </main>
     </div>
   );
