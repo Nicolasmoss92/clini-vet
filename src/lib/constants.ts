@@ -1,4 +1,17 @@
-import type { StatusAgendamento } from '@/lib/api';
+import type { CategoriaDespesa, StatusAgendamento } from '@/lib/api';
+
+export const CATEGORIA_LABEL: Record<CategoriaDespesa, string> = {
+  AGUA: 'Água',
+  LUZ: 'Luz',
+  ALUGUEL: 'Aluguel',
+  PRODUTO_CIRURGIA: 'Produtos de Cirurgia',
+  PRODUTO_BANHO: 'Produtos de Banho',
+  OUTROS: 'Outros',
+};
+
+export const CATEGORIA_OPTIONS: CategoriaDespesa[] = [
+  'AGUA', 'LUZ', 'ALUGUEL', 'PRODUTO_CIRURGIA', 'PRODUTO_BANHO', 'OUTROS',
+];
 
 export const TIPO_LABEL: Record<string, string> = {
   CONSULTA: 'Consulta',

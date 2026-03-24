@@ -80,6 +80,14 @@ export const agendamentosApi = {
     }),
 };
 
+// Despesas
+export const despesasApi = {
+  list: (mes?: string) => request<Despesa[]>(`/despesas${mes ? `?mes=${mes}` : ''}`),
+  create: (data: CreateDespesaData) =>
+    request<Despesa>('/despesas', { method: 'POST', body: JSON.stringify(data) }),
+  remove: (id: string) => request<Despesa>(`/despesas/${id}`, { method: 'DELETE' }),
+};
+
 // Vacinas
 export const vacinasApi = {
   listByAnimal: (animalId: string) => request<Vacina[]>(`/vacinas/animal/${animalId}`),
@@ -92,6 +100,7 @@ export const vacinasApi = {
 
 // Types
 export type Role = 'ADMIN' | 'TUTOR';
+export type CategoriaDespesa = 'AGUA' | 'LUZ' | 'ALUGUEL' | 'PRODUTO_CIRURGIA' | 'PRODUTO_BANHO' | 'OUTROS';
 export type StatusAgendamento = 'AGENDADO' | 'CONFIRMADO' | 'CONCLUIDO' | 'CANCELADO';
 export type TipoAgendamento = 'CONSULTA' | 'BANHO_TOSA' | 'PETSITTER';
 
@@ -172,6 +181,22 @@ export interface CreateAgendamentoData {
   horaFim?: string;
   observacoes?: string;
   status?: StatusAgendamento;
+}
+
+export interface Despesa {
+  id: string;
+  descricao: string;
+  categoria: CategoriaDespesa;
+  valor: number;
+  data: string;
+  createdAt: string;
+}
+
+export interface CreateDespesaData {
+  descricao: string;
+  categoria: CategoriaDespesa;
+  valor: number;
+  data: string;
 }
 
 export interface CreateVacinaData {
