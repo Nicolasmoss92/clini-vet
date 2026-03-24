@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { LucideIcon, LogOut, ExternalLink } from 'lucide-react';
+import { PageTransition } from '@/components/ui/PageTransition';
 
 interface NavItem {
   label: string;
@@ -100,7 +101,9 @@ export function AppShell({ children, navItems, title, userName, showSiteLink, on
           </nav>
         </aside>
 
-        <main className="flex-1 p-4 md:p-6 bg-gray-50">{children}</main>
+        <main className="flex-1 p-4 md:p-6 bg-gray-50">
+          <PageTransition key={pathname}>{children}</PageTransition>
+        </main>
       </div>
     </div>
   );

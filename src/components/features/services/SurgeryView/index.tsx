@@ -1,6 +1,7 @@
 import Footer from '@/components/footer';
 import Header from '@/components/header';
 import SubHeader from '@/components/layout/surgery/SubHeader';
+import { PageTransition } from '@/components/ui/PageTransition';
 
 export function SurgeryView() {
   return (
@@ -8,6 +9,7 @@ export function SurgeryView() {
       <Header />
 
       <main className="flex-grow flex flex-col items-center p-0 w-full">
+        <PageTransition>
         <SubHeader />
         <div className="w-full bg-gray-50 px-4 py-12">
           <div className="max-w-5xl mx-auto">
@@ -89,6 +91,7 @@ export function SurgeryView() {
             </section>
           </div>
         </div>
+        </PageTransition>
       </main>
 
       <Footer />

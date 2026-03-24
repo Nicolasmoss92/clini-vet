@@ -1,5 +1,6 @@
 import Footer from '@/components/footer';
 import Header from '@/components/header';
+import { PageTransition } from '@/components/ui/PageTransition';
 
 export function HomeView() {
   return (
@@ -7,6 +8,7 @@ export function HomeView() {
       <Header />
 
       <main className="flex-grow flex flex-col items-center p-0 w-full">
+        <PageTransition>
         <div className="relative w-full h-[300px] md:h-[500px] bg-gray-100 overflow-hidden mb-0">
           <div className="w-full">
             <img
@@ -107,7 +109,7 @@ export function HomeView() {
           </h2>
           <div className="relative w-full h-64 sm:h-80 md:h-96 rounded-lg overflow-hidden shadow-lg">
             <iframe
-              src="https://www.google.com/maps/embed?pb=..."
+              src="https://maps.google.com/maps?q=R.+Gen.+Flores+da+Cunha,+850,+Centro,+Nova+Prata,+RS,+95320-000&output=embed"
               width="100%"
               height="100%"
               style={{ border: 0 }}
@@ -117,6 +119,7 @@ export function HomeView() {
             />
           </div>
         </div>
+        </PageTransition>
       </main>
 
       <Footer />
