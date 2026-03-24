@@ -94,7 +94,7 @@ export function LoginForm() {
 
       <Link
         href="/home"
-        className="flex items-center justify-center gap-1.5 text-sm font-medium text-gray-500 border border-gray-300 py-2.5 rounded-lg hover:border-gray-400 hover:text-gray-700 transition duration-200"
+        className="flex items-center justify-center gap-1.5 text-sm font-medium text-green-600 border border-green-600 py-2.5 rounded-lg hover:bg-green-600 hover:text-white transition duration-300"
       >
         <ArrowLeft size={14} />
         Voltar ao site
